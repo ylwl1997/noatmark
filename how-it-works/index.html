@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How NoAtMark Works — Text Hygiene for the AI Age | NoAtMark</title>
+<meta name="description" content="See how NoAtMark cleans invisible characters, hidden text, and formatting junk from AI-generated and copied text — before you publish, submit, or feed an AI.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/how-it-works/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"How NoAtMark Works","url":"https://noatmark.com/how-it-works/"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"How it works","item":"https://noatmark.com/how-it-works/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/for-students-teachers/">Students &amp; Teachers</a>
+      <a href="/pricing/">Pricing</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">How it works</p>
+      <h1>Text hygiene, <span class="accent">in three steps.</span></h1>
+      <p class="lede">AI output and copy-paste from the web carry invisible characters, hidden text, and formatting junk you can't see. NoAtMark finds and removes them — before you publish, submit, or feed an AI.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — in-browser</span>
+        <span class="badge">&#x1F50D; <b>deterministic</b> — no false positives</span>
+        <span class="badge">&#x2705; <b>free</b> — no sign-up</span>
+      </div>
+
+      <div class="demo">
+        <div class="demo-step" id="demoStep">1 · Paste</div>
+        <div class="demo-text" id="demoText"></div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>The <span class="accent">three steps</span></h2>
+      <div class="grid3">
+        <div class="card step-card"><span class="step-n">1</span><h3>Paste</h3><p>Drop in AI output, a web copy, a document, or a student submission. Nothing leaves your browser.</p></div>
+        <div class="card step-card"><span class="step-n">2</span><h3>Scan</h3><p>NoAtMark finds every invisible character, hidden-text signal, and injection pattern — naming each one.</p></div>
+        <div class="card step-card"><span class="step-n">3</span><h3>Clean</h3><p>One click strips the hidden artifacts and hands you clean text, ready to publish, submit, or embed.</p></div>
+      </div>
+
+      <h2 style="margin-top:32px">Built for <span class="accent">three workflows</span></h2>
+      <div class="grid3">
+        <a class="card card-link" href="/api/">
+          <span class="cat">Developers</span>
+          <h3>Sanitize input before it hits your LLM</h3>
+          <p>Strip injection and invisible chars from untrusted text — via API, MCP, or SDK, with a CI gate. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/pre-publish-inspector/">
+          <span class="cat">Creators</span>
+          <h3>Publish clean, AI-visible content</h3>
+          <p>Check the GEO score and clean hidden text in WordPress, Ghost, Notion, Google Docs, or your browser. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/for-students-teachers/">
+          <span class="cat">Students &amp; teachers</span>
+          <h3>Clean before you submit — or audit it</h3>
+          <p>Students clean their work; teachers reveal hidden text in submissions. <span class="arr">&rarr;</span></p>
+        </a>
+      </div>
+
+      <h2 style="margin-top:32px">What you <span class="accent">get</span></h2>
+      <div class="grid3">
+        <a class="card card-link" href="/tools/"><span class="cat">Tools</span><h3>11 free web tools</h3><p>Clean, convert, scan, and audit — all in-browser. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/api/"><span class="cat">API</span><h3>JSON API</h3><p>The same engines as endpoints for your pipeline. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/extension/"><span class="cat">Everywhere</span><h3>Browser + plugins</h3><p>Chrome, WordPress, Ghost, Notion, Google Docs. <span class="arr">&rarr;</span></p></a>
+      </div>
+
+      <p style="margin-top:28px;text-align:center"><a class="btn btn-primary btn-lg" href="/">&#x1F50D; Try it free &rarr;</a></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+      <a href="/notion/">Notion</a>
+      <a href="/google-docs/">Google Docs</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/csv-injection-sanitizer/">CSV sanitizer</a>
+      <a href="/tools/rag-sanitizer/">RAG sanitizer</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/submission-auditor/">Submission auditor</a>
+      <a href="/for-students-teachers/">Students &amp; teachers</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script>
+(function () {
+  "use strict";
+  var clean = "Copy from ChatGPT, then clean the hidden characters.";
+  // 在固定位置插入隐形字符（零宽空格 + 零宽连接符）
+  var raw = clean.slice(0, 8) + "​" + clean.slice(8, 20) + "​‍" + clean.slice(20);
+
+  function isInvisible(ch) {
+    var cp = ch.codePointAt(0);
+    return cp === 0x200B || cp === 0x200C || cp === 0x200D || cp === 0x2060 || cp === 0xFEFF || cp === 0x00AD;
+  }
+  function highlighted(t) {
+    return Array.from(t).map(function (ch) {
+      return isInvisible(ch) ? '<span class="inv">' + ch + '</span>' : ch;
+    }).join("");
+  }
+
+  var states = [
+    { step: "1 · Paste", html: raw },
+    { step: "2 · Scan — hidden characters revealed", html: highlighted(raw) },
+    { step: "3 · Clean — hidden characters removed", html: clean + ' <span class="pos">✓</span>' },
+  ];
+  var i = 0;
+  function tick() {
+    var s = states[i % states.length];
+    document.getElementById("demoStep").textContent = s.step;
+    document.getElementById("demoText").innerHTML = s.html;
+    i += 1;
+  }
+  tick();
+  setInterval(tick, 2200);
+})();
+</script>
+</body>
+</html>
