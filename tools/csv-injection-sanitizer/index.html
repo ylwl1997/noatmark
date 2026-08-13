@@ -171,7 +171,7 @@
 
   sanitizeBtn.addEventListener("click", run);
   sampleBtn.addEventListener("click", function () {
-    input.value = 'Name,Email,Comment\nAlice,alice@example.com,=HYPERLINK("http://evil.com","click")\nBob,bob@example.com,+SUM(1,2)\nCharlie,charlie@example.com,@cmd\nDave,dave@example.com,normal comment';
+    input.value = 'Name,Email,Comment\nAlice,alice@example.com,"=HYPERLINK(""http://evil.com"",""click me"")"\nBob,bob@example.com,"+SUM(1,2)"\nCharlie,charlie@example.com,@cmd\nDave,dave@example.com,normal comment';
     run();
   });
   clearBtn.addEventListener("click", function () {
