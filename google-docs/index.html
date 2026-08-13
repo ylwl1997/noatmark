@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark for Google Docs — Clean Invisible Characters | NoAtMark</title>
+<meta name="description" content="Add a NoAtMark menu to Google Docs to strip invisible characters (zero-width spaces, BOMs, soft hyphens) from your document — preserving formatting. Free copy-paste Apps Script.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/google-docs/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Google Docs</p>
+      <h1>Clean invisible characters, <span class="accent">right in Docs.</span></h1>
+      <p class="lede">A copy-paste Google Apps Script that adds a NoAtMark menu to Google Docs — stripping zero-width spaces, BOMs, and soft hyphens from your document while keeping bold, links, and formatting intact.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>in-document</b> — nothing leaves Docs</span>
+        <span class="badge">&#x1F4DD; <b>formatting-safe</b> — editAsText</span>
+        <span class="badge">&#x1F504; <b>free</b> — no add-on store</span>
+      </div>
+
+      <div class="browsers">
+        <a class="btn btn-primary btn-lg" href="/google-docs/noatmark.gs" download>&#x2B07; Download noatmark.gs</a>
+      </div>
+      <p class="muted small" style="margin-top:8px">Free, open source. No account, no upload.</p>
+
+      <div class="scanner" style="margin-top:26px">
+        <div class="grid3">
+          <div class="card">
+            <h3>&#x1F4CC; One menu item</h3>
+            <p>Adds a <em>NoAtMark → Clean invisible characters</em> menu to the Docs menu bar.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F4DD; Formatting-safe</h3>
+            <p>Uses <code>editAsText()</code> + <code>deleteText()</code> so bold, links, and formatting survive.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F512; Private</h3>
+            <p>Runs entirely inside your document — nothing leaves Google Docs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>Install in 4 steps</h2>
+      <ol class="steps">
+        <li>Open your Google Doc → <strong>Extensions → Apps Script</strong>.</li>
+        <li>Delete the placeholder code and paste the whole <a href="/google-docs/noatmark.gs" download>noatmark.gs</a>.</li>
+        <li>Save, then select the <code>onOpen</code> function → <strong>Run</strong> (authorize it).</li>
+        <li>Reload the doc — a <strong>NoAtMark</strong> menu appears.</li>
+      </ol>
+      <p class="muted">Then: menu → NoAtMark → Clean invisible characters. A popup reports how many were removed.</p>
+
+      <h2>What it strips</h2>
+      <ul>
+        <li>Zero-width spaces (U+200B), joiners (U+200C/U+200D), non-joiner, word joiner (U+2060)</li>
+        <li>BOM (U+FEFF), soft hyphen (U+00AD), direction marks (U+200E/U+200F)</li>
+        <li>Combining grapheme joiner (U+034F), variation selectors, special spaces, non-breaking space</li>
+      </ul>
+      <p class="muted small">Handles paragraphs, list items, and table cells.</p>
+
+      <h2>More</h2>
+      <ul>
+        <li>Web tools: <a href="/tools/">noatmark.com/tools/</a></li>
+        <li>Notion: <a href="/notion/">noatmark.com/notion/</a></li>
+        <li>Ghost: <a href="/ghost/">noatmark.com/ghost/</a></li>
+        <li>WordPress plugin: <a href="/wordpress-plugin/">noatmark.com/wordpress-plugin/</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Google, Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>
