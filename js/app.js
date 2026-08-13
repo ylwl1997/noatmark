@@ -14,6 +14,7 @@
   const clearBtn = $("clearBtn");
   const cleanBtn = $("cleanBtn");
   const copyCleanBtn = $("copyCleanBtn");
+  const checkReport = $("checkReport");
   const optKeepBom = $("optKeepBom");
   const optKeepSpecial = $("optKeepSpecial");
   const optKeepCtrl = $("optKeepCtrl");
@@ -42,6 +43,7 @@
     cleanedText = scanner.cleanText(text, options());
     copyCleanBtn.disabled = res.total === 0;
     copyCleanBtn.textContent = res.total === 0 ? "Copy cleaned" : `Copy cleaned (${res.total} removed)`;
+    renderCheckReport(text);
   }
 
   function statsHtml(res) {
@@ -52,6 +54,28 @@
       .map(([g, n]) => `<span class="chip">${g} &times; ${n}</span>`)
       .join("");
     return `<b>${res.total}</b> invisible character${res.total === 1 ? "" : "s"} found. ${chips}`;
+  }
+
+  // Unified checker: also report prompt injection, hidden text, and a GEO score.
+  function renderCheckReport(text) {
+    if (!checkReport) return;
+    const S = window.NoAtMarkScan;
+    const inj = S ? S.detectPromptInjection(text) : [];
+    const hidden = S ? S.detectHiddenHtml(text) : [];
+    const geo = window.NoAtMarkInspect ? window.NoAtMarkInspect.inspectArticle(text) : null;
+
+    const chips = [];
+    if (geo) {
+      const c = geo.geoScore >= 75 ? "var(--mint)" : geo.geoScore >= 50 ? "var(--amber)" : "var(--red)";
+      chips.push(`<span class="check-chip"><b>GEO</b> <span style="color:${c};font-weight:700">${geo.geoScore}</span>/100</span>`);
+    }
+    chips.push(inj.length
+      ? `<span class="check-chip bad">&#x26A0;&#xFE0F; ${inj.length} injection pattern${inj.length > 1 ? "s" : ""}: ${inj.join(", ")}</span>`
+      : `<span class="check-chip ok">&#x2713; no injection</span>`);
+    chips.push(hidden.length
+      ? `<span class="check-chip bad">&#x26A0;&#xFE0F; hidden text: ${hidden.join(", ")}</span>`
+      : `<span class="check-chip ok">&#x2713; no hidden text</span>`);
+    checkReport.innerHTML = chips.join("") + ' <a href="/tools/pre-publish-inspector/">full report &rarr;</a>';
   }
 
   function copyText(text) {
