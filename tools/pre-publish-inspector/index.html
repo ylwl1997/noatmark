@@ -44,6 +44,10 @@
       </div>
 
       <div class="scanner">
+        <div class="tabs" style="margin-bottom:14px">
+          <button class="tab active" id="modeSingle" type="button">Single article</button>
+          <button class="tab" id="modeBatch" type="button">Batch (multiple, separated by ---)</button>
+        </div>
         <textarea id="input" class="input" spellcheck="false" placeholder="Paste your article here (Markdown or plain text)…"></textarea>
         <div class="scan-actions">
           <button id="runBtn" class="btn btn-primary">&#x1F4CA; Inspect</button>
@@ -80,6 +84,13 @@
               <button id="copyBtn" class="btn btn-ghost" disabled>Copy fixed text</button>
             </div>
           </div>
+        </div>
+
+        <div id="batchReport" class="report hidden">
+          <div class="scan-actions" style="margin-bottom:12px">
+            <button id="downloadCsvBtn" class="btn btn-primary btn-sm">&#x2B07;&#xFE0F; Download CSV</button>
+          </div>
+          <div id="batchTable"></div>
         </div>
       </div>
     </section>
@@ -148,14 +159,12 @@
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
   var insp = window.NoAtMarkInspect.inspectArticle, T = window.NoAtMarkTool;
-  var report = $("report");
+  var report = $("report"), batchReport = $("batchReport"), batchTable = $("batchTable");
+  var mode = "single", lastBatch = [];
 
   function scoreColor(s) { return s >= 75 ? "var(--mint)" : s >= 50 ? "var(--amber)" : "var(--red)"; }
 
-  $("runBtn").addEventListener("click", function () {
-    var text = $("input").value;
-    if (!text.trim()) return;
-    var r = insp(text);
+  function renderSingle(r) {
     report.classList.remove("hidden");
 
     // gauge
@@ -180,12 +189,68 @@
     // recommendations
     var needsEdit = r.recommendations.map(function (x) { return "<li>" + T.esc(x) + "</li>"; }).join("");
     $("recs").innerHTML = needsEdit || "<li>Nothing to fix.</li>";
-    $("recs").insertAdjacentHTML("beforebegin",
-      '<p class="muted" style="font-size:12px">These need <b>your edit</b> (structure, length, content):</p>');
 
     // one-click fixes
-    $("outText").value = r.changed ? r.cleanedText : text;
+    $("outText").value = r.changed ? r.cleanedText : $("input").value;
     $("copyBtn").disabled = !r.changed;
+  }
+
+  function splitArticles(text) {
+    return text.split(/\n---+\s*\n/).map(function (s) { return s.trim(); }).filter(Boolean);
+  }
+
+  function renderBatch(results) {
+    lastBatch = results;
+    batchReport.classList.remove("hidden");
+    var rows = results.map(function (r, i) {
+      var issues = [];
+      if (r.hiddenTotal) issues.push(r.hiddenTotal + " invis");
+      if (r.injectionCount) issues.push(r.injectionCount + " inject");
+      if (r.words < 300) issues.push("short");
+      return '<tr><td>#' + (i + 1) + '</td><td>' + r.words + '</td><td style="color:' + scoreColor(r.geoScore) + ';font-weight:700">' + r.geoScore + '</td><td class="dim">' + T.esc(issues.join(", ") || "ok") + '</td></tr>';
+    }).join("");
+    batchTable.innerHTML = '<table class="ztable"><tr><th>#</th><th>Words</th><th>GEO</th><th>Issues</th></tr>' + rows + '</table>';
+  }
+
+  function setMode(m) {
+    mode = m;
+    $("modeSingle").classList.toggle("active", m === "single");
+    $("modeBatch").classList.toggle("active", m === "batch");
+    report.classList.add("hidden");
+    batchReport.classList.add("hidden");
+    $("input").placeholder = m === "batch"
+      ? "Paste multiple articles, separated by a line of --- …"
+      : "Paste your article here (Markdown or plain text)…";
+  }
+  $("modeSingle").addEventListener("click", function () { setMode("single"); });
+  $("modeBatch").addEventListener("click", function () { setMode("batch"); });
+
+  $("runBtn").addEventListener("click", function () {
+    var text = $("input").value;
+    if (!text.trim()) return;
+    if (mode === "batch") {
+      var arts = splitArticles(text);
+      if (!arts.length) return;
+      report.classList.add("hidden");
+      renderBatch(arts.map(function (a) { return insp(a); }));
+    } else {
+      batchReport.classList.add("hidden");
+      renderSingle(insp(text));
+    }
+  });
+
+  $("downloadCsvBtn").addEventListener("click", function () {
+    if (!lastBatch.length) return;
+    var csv = "article,words,geo_score,invisible,injection\n" + lastBatch.map(function (r, i) {
+      return [(i + 1), r.words, r.geoScore, r.hiddenTotal, r.injectionCount].join(",");
+    }).join("\n");
+    var blob = new Blob([csv], { type: "text/csv" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "noatmark-batch-inspection.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    T.flash($("downloadCsvBtn"), "Downloading CSV!");
   });
 
   $("sampleBtn").addEventListener("click", function () {
@@ -197,7 +262,8 @@
   });
   $("clearBtn").addEventListener("click", function () {
     $("input").value = ""; $("outText").value = "";
-    report.classList.add("hidden");
+    report.classList.add("hidden"); batchReport.classList.add("hidden");
+    lastBatch = [];
   });
   $("applyBtn").addEventListener("click", function () {
     T.copyText($("outText").value).then(function (ok) { T.flash($("applyBtn"), ok ? "Copied fixed text!" : "Copy failed"); });
