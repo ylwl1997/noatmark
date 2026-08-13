@@ -27,7 +27,13 @@ function parseCsv(text, delimiter) {
       }
       field += c; i += 1; continue;
     }
-    if (c === '"') { inQuotes = true; i += 1; continue; }
+    if (c === '"') {
+      // Only a quote at the very start of a field opens a quoted field.
+      // A quote in the middle of an unquoted field is a literal character
+      // (lenient, matches Python's csv reader).
+      if (field === "") { inQuotes = true; i += 1; continue; }
+      field += '"'; i += 1; continue;
+    }
     if (c === d) { row.push(field); field = ""; i += 1; continue; }
     if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; i += 1; continue; }
     if (c === "\r") { i += 1; continue; }
