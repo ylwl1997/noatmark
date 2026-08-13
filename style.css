@@ -445,6 +445,13 @@ h2 .anchor { color: var(--mint); font-size: 18px; }
 .muted { color: var(--muted); }
 .muted.small { font-size: 13px; }
 
+/* ---------- ad slot ---------- */
+.ad-slot { max-width: 340px; margin: 0 auto; text-align: center; }
+.ad-label {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+
 .hidden { display: none; }
 
 /* status colors (shared by tables / reports) */
