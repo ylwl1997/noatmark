@@ -1,0 +1,7 @@
+Copying from AI tools can leave hidden characters.
+
+
+
+This line has a zero​width space and a‍ joiner.
+A BOM﻿ and a soft­hyphen too.  With  extra  spaces.   
+Normal paragraph that should stay clean.

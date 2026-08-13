@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Output Copy-Paste Hygiene — What ChatGPT &amp; Claude Leave on Your Clipboard | NoAtMark</title>
+<meta name="description" content="Copying from ChatGPT and Claude often carries invisible characters and formatting junk. Learn the copy-paste hygiene habit that keeps your text clean — and the tools that automate it.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/blog/ai-output-copy-paste-hygiene/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"AI Output Copy-Paste Hygiene","description":"Copying from ChatGPT and Claude often carries invisible characters and formatting junk. Learn the hygiene habit that keeps your text clean.","author":{"@type":"Organization","name":"NoAtMark","url":"https://noatmark.com/"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-12","dateModified":"2026-08-12","mainEntityOfPage":"https://noatmark.com/blog/ai-output-copy-paste-hygiene/","about":"copy-paste hygiene for AI-generated content"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://noatmark.com/blog/"},{"@type":"ListItem","position":3,"name":"AI Output Copy-Paste Hygiene","item":"https://noatmark.com/blog/ai-output-copy-paste-hygiene/"}]},
+{"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does every AI copy carry invisible characters?", "acceptedAnswer": {"@type": "Answer", "text": "Not every time, but it is common enough that checking is worthwhile. A scan tells you in a second whether yours does."}}, {"@type": "Question", "name": "Is the extension safe?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It runs entirely in your browser, touches only what you copy, and can be toggled off. It never uploads your text."}}, {"@type": "Question", "name": "What if I need the invisible characters?", "acceptedAnswer": {"@type": "Answer", "text": "That is almost never the case in work you are pasting into forms, code, or a CMS. If a scan finds some, review the report before cleaning."}}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">For heavy AI users</p>
+      <h1>AI output <span class="accent">copy-paste hygiene</span></h1>
+      <p class="lede">You copy an answer from ChatGPT or Claude, paste it into an editor, and it "looks" fine. But invisible characters and formatting junk often ride along — breaking your form, your code, or your CMS. A single habit fixes it, and it takes two seconds.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 12, 2026 &middot; 7 min read</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>The reality of copy from AI tools</h2>
+      <p>AI assistants render text with care: line breaking, emoji presentation, markdown, and syntax highlighting all do real work under the hood. When you copy the rendered output, you sometimes carry along the invisible scaffolding — zero-width characters, BOMs, and format marks that render as nothing but exist as bytes.</p>
+      <p>You won't see it on screen. You'll discover it later, in the form of a form that won't submit, a string that won't match, or a database row that's "identical" but not.</p>
+
+      <h2>What's really on your clipboard</h2>
+      <ul>
+        <li><strong>Zero-width characters</strong> — <code>U+200B</code> (zero-width space), <code>U+200C</code>/<code>U+200D</code> (joiners), <code>U+2060</code> (word joiner).</li>
+        <li><strong>BOMs and soft hyphens</strong> — <code>U+FEFF</code>, <code>U+00AD</code> — from rendering and line-breaking.</li>
+        <li><strong>Formatting junk</strong> — stray code fences, runs of blank lines, over-deep headings, double spaces.</li>
+        <li><strong>Occasionally, tracking characters</strong> — zero-width strings embedded by the source for watermarking.</li>
+      </ul>
+
+      <h2>What it does to your work</h2>
+      <ul>
+        <li><strong>Forms and CMS.</strong> Pasted text that "looks" valid is rejected by validators counting invisible bytes.</li>
+        <li><strong>Code.</strong> Copied code breaks string comparisons and validators. (We cover the <a href="/blog/invisible-characters-in-code/">developer angle</a> in depth.)</li>
+        <li><strong>Published content.</strong> Invisible bytes can read as a spam signal to classifiers and confuse AI search engines. (See the <a href="/blog/clean-ai-text-before-publishing/">editor's checklist</a> and <a href="/blog/geo-generative-engine-optimization/">GEO</a>.)</li>
+        <li><strong>Data.</strong> If AI output feeds a CSV or JSON export, invisible characters corrupt it. (See the <a href="/blog/csv-json-data-corruption-invisible-characters/">data guide</a>.)</li>
+      </ul>
+
+      <h2>The two-second habit</h2>
+      <p>Clean anything you copy from an AI tool before you use it. Three easy options, from manual to automatic:</p>
+      <ol class="steps">
+        <li><strong>Paste &amp; scan.</strong> Drop the text into the <a href="/tools/plain-text-extractor/">plain text extractor</a> or the <a href="/zero-width-character/">invisible character remover</a> — see what's hidden, then clean it.</li>
+        <li><strong>Clean whole files.</strong> For documents, use the <a href="/tools/file-cleaner/">file cleaner</a> (TXT, MD, HTML, DOCX, CSV, JSON).</li>
+        <li><strong>Automate it.</strong> Install the <a href="/extension/">NoAtMark extension</a> — it strips invisible characters automatically the moment you copy from ChatGPT, Claude, or any web page. The <a href="/extension/">VS Code extension</a> cleans a selection directly in your editor.</li>
+      </ol>
+
+      <h2>Why this matters more as AI search grows</h2>
+      <p>As AI search engines start reading and quoting content, cleanliness is a competitive edge. Text that pastes clean, parses clean, and publishes clean gets cited more. Dirty text gets skipped or, worse, flagged. The habit costs two seconds and compounds.</p>
+
+      <h2>Honest caveats</h2>
+      <ul>
+        <li>Cleaning invisible characters doesn't change the words — it removes hidden bytes and formatting artifacts only.</li>
+        <li>It also doesn't "hide" that content came from an AI model, and it doesn't remove statistical watermarks. If your concern is transparency, see <a href="/claude-watermark/">how Claude's watermark actually works</a>.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Does every AI copy carry invisible characters?</summary><p>Not every time — but it's common enough that checking is worthwhile. A scan tells you in a second whether yours does.</p></details>
+      <details><summary>Is the extension safe?</summary><p>Yes — it runs entirely in your browser, touches only what you copy, and can be toggled off. It never uploads your text.</p></details>
+      <details><summary>What if I need the invisible characters?</summary><p>That's almost never the case in work you're pasting into forms, code, or CMS. If a scan finds some, review the report before cleaning.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard (code points &amp; semantics) — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org</a></li>
+        <li>Our extension — <a href="/extension/">noatmark.com/extension</a></li>
+        <li>Related: <a href="/blog/clean-ai-text-before-publishing/">clean AI text before publishing</a></li>
+      </ul>
+
+            <div class="author-bio">
+        <img class="ab-avatar" src="/logo.svg" alt="NoAtMark logo">
+        <div>
+          <b>The NoAtMark Team</b>
+          <p class="muted small">NoAtMark is an independent project focused on text hygiene for the AI age. This article is written and fact-checked by the team; sources are linked under References. Every tool mentioned is free, private, and runs in your browser. <a href="/about/">About us &rarr;</a></p>
+        </div>
+      </div>
+
+<div class="card card-accent" style="margin-top:22px">
+        <h3>Make clean copying your default</h3>
+        <p>Install the extension and never worry about hidden characters on your clipboard again.</p>
+        <p style="margin-top:10px"><a class="btn btn-primary" href="/extension/">Get the extension &rarr;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

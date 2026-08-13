@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why You Should Clean AI Text Before Publishing — A Pre-Publish Checklist | NoAtMark</title>
+<meta name="description" content="AI-generated drafts carry invisible characters and formatting junk that can trigger spam flags and hurt AI-search visibility. A technical pre-publish checklist to clean AI text before you publish.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/blog/clean-ai-text-before-publishing/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"Why You Should Clean AI Text Before Publishing","description":"AI-generated drafts carry invisible characters and formatting junk that can trigger spam flags and hurt AI-search visibility.","author":{"@type":"Organization","name":"NoAtMark","url":"https://noatmark.com/"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-12","dateModified":"2026-08-12","mainEntityOfPage":"https://noatmark.com/blog/clean-ai-text-before-publishing/","about":"text hygiene for AI-generated content"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://noatmark.com/blog/"},{"@type":"ListItem","position":3,"name":"Clean AI Text Before Publishing","item":"https://noatmark.com/blog/clean-ai-text-before-publishing/"}]},
+{"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does cleaning AI text remove the AI watermark?", "acceptedAnswer": {"@type": "Answer", "text": "No, and no tool honestly can today. Anthropic's text watermark is a statistical signal in word choice, not a visible character; C2PA lives in file metadata. Removing invisible characters is a different, well-defined task."}}, {"@type": "Question", "name": "Will Google penalise me for using AI text?", "acceptedAnswer": {"@type": "Answer", "text": "Google's quality guidance focuses on helpful, original, people-first content, not the origin. But content that looks machine-generated, including spam signals like hidden characters, can be treated more harshly. Clean, genuinely useful content is the safest path."}}, {"@type": "Question", "name": "Does cleaning change my words?", "acceptedAnswer": {"@type": "Answer", "text": "No. The file cleaner and formatter only remove invisible characters and formatting artifacts such as blank lines, trailing spaces, and stray fences. They never rewrite content or change meaning."}}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">For content editors &amp; creators</p>
+      <h1>Why you should <span class="accent">clean AI text</span> before publishing</h1>
+      <p class="lede">Your AI draft looks fine in the editor. But underneath, it carries invisible characters and formatting junk that can trigger spam flags and hurt AI-search visibility. Here's the technical reality — and a pre-publish checklist that takes three minutes.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 12, 2026 &middot; 8 min read</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>A scenario you'll recognise</h2>
+      <p>An editor drafts an article with an AI assistant, copies it into the CMS, and publishes. The page looks fine. A week later, a reader writes in: "your newsletter bounced — my email client rejected the unsubscribe link." Or Google Search Console shows the page crawled but never indexed. Or a data analyst pulls the article's text and finds invisible bytes in every paragraph.</p>
+      <p>All three failures share one root cause: <strong>invisible characters that copy out of the AI tool without you seeing them.</strong> This isn't hypothetical — zero-width characters are common enough in copied content that they have an <a href="/zero-width-character/">entire category</a> of tools dedicated to removing them.</p>
+
+      <h2>What your AI draft is actually carrying</h2>
+      <p>When you copy from ChatGPT, Claude, or a modern writing tool, the clipboard often contains more than the words. Three kinds of pollution are common:</p>
+
+      <h3>1. Invisible (zero-width) characters</h3>
+      <p>These are real Unicode code points that occupy no visible space:</p>
+      <table class="ztable">
+        <tr><th>Name</th><th>Code point</th><th>Where it shows up</th></tr>
+        <tr><td>Zero Width Space</td><td><code>U+200B</code></td><td>Line-breaking artifacts, AI output</td></tr>
+        <tr><td>Zero Width Joiner / Non-Joiner</td><td><code>U+200D</code> / <code>U+200C</code></td><td>Emoji sequences, shaping, copied text</td></tr>
+        <tr><td>Byte Order Mark (BOM)</td><td><code>U+FEFF</code></td><td>File encodings, copy-paste</td></tr>
+        <tr><td>Soft Hyphen</td><td><code>U+00AD</code></td><td>Automatic hyphenation</td></tr>
+        <tr><td>Variation Selectors</td><td><code>U+FE00–U+FE0F</code></td><td>Emoji presentation, copied text</td></tr>
+      </table>
+      <p>Per the <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">Unicode Standard</a>, these are legitimate code points with legitimate uses. The problem isn't that they exist — it's that they appear <em>unintentionally</em> in content meant to be plain text, and most systems count them as characters while rendering them as nothing.</p>
+
+      <h3>2. Formatting artifacts</h3>
+      <p>AI drafts often carry stray code fences (<code>```</code>), runs of blank lines, over-deep headings (<code>#######</code>), and inconsistent spacing — leftovers from how the model was trained to format.</p>
+
+      <h3>3. Trackers and hidden marks</h3>
+      <p>Some content embeds invisible tracking codes — zero-width strings used to watermark copies. When you copy from a source that uses them, you inherit the tracker.</p>
+
+      <h2>What dirty text costs you</h2>
+      <ul>
+        <li><strong>Spam-risk signals.</strong> Hidden characters are a known signal in automated quality classification. Content laced with invisible bytes can look machine-generated to classifiers, even when a human edited every visible word.</li>
+        <li><strong>Broken parsing by AI engines.</strong> Generative engines (Google AI Overviews, ChatGPT Search, Perplexity) extract and quote your content. Hidden bytes and messy structure make that extraction worse — you lose citations you might otherwise win.</li>
+        <li><strong>Validation failures for readers.</strong> A reader copies a paragraph into a form, a CMS, or an email and hits a validation error caused by invisible bytes they can't see.</li>
+        <li><strong>Data corruption.</strong> If your article text feeds into spreadsheets or databases anywhere, invisible characters break matching and imports. (We cover this for <a href="/blog/csv-json-data-corruption-invisible-characters/">CSV and JSON</a> and for <a href="/blog/invisible-characters-in-code/">code</a>.)</li>
+      </ul>
+
+      <h2>A 3-minute pre-publish checklist</h2>
+      <ol class="steps">
+        <li><strong>Strip invisible characters.</strong> Paste your draft (or upload the file) into the <a href="/tools/file-cleaner/">file cleaner</a> — it scans first, shows you every invisible character by type, then cleans on your command. For quick pastes, the <a href="/zero-width-character/">invisible character remover</a> works on any text.</li>
+        <li><strong>Tidy the formatting.</strong> Let the <a href="/tools/llm-formatter/">LLM formatter</a> collapse blank lines, drop stray fences, and normalize headings — <em>meaning untouched</em>.</li>
+        <li><strong>Run the <a href="/tools/pre-publish-inspector/">Pre-Publish Inspector</a>.</strong> It scores pollution, structure, scannability, length, and clarity, and gives you a transparent GEO score with reasons.</li>
+        <li><strong>Check images.</strong> If your article uses AI-generated images, verify provenance with the <a href="/c2pa-verifier/">C2PA Checker</a>.</li>
+      </ol>
+
+      <h2>Does cleaning text help with AI search? (GEO)</h2>
+      <p>In short: yes, but it's a baseline, not a silver bullet. Generative Engine Optimization (GEO) is about making content more likely to be understood and cited by AI search engines. Clean, well-structured text is the <em>foundation</em> — engines parse it more reliably and classifiers are less likely to flag it. Structure (headings, lists, short paragraphs) gives engines clean chunks to quote. But substance and authority still matter; clean text alone doesn't make weak content quotable. We explain the <a href="/blog/geo-generative-engine-optimization/">GEO mechanics</a> separately.</p>
+
+      <h2>How to verify your draft is clean</h2>
+      <p>If you want to check without cleaning: paste the text into the scanner and look at the report. You'll see counts grouped by character type — for example "3 invisible: zero-width space × 2, BOM × 1" — and formatting counts. Zero findings means your draft is clean. Keep a clean copy of every AI draft you publish; it's both a hygiene habit and a useful reference.</p>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Does cleaning AI text remove the AI "watermark"?</summary><p>No, and no tool honestly can today. Anthropic's text watermark is a statistical signal in word choice, not a visible character; C2PA lives in file metadata. Removing invisible <em>characters</em> is a different, well-defined task. See <a href="/claude-watermark/">Claude's watermark explained</a>.</p></details>
+      <details><summary>Will Google penalise me for using AI text?</summary><p>Google's quality guidance focuses on <em>helpful, original, people-first content</em> — the origin doesn't automatically earn or lose trust. But content that looks machine-generated (including spam signals like hidden characters) can be treated more harshly. Clean, genuinely useful content is the safest path. This mirrors Google's quality-rater concept of E-E-A-T: experience, expertise, authoritativeness, and trustworthiness.</p></details>
+      <details><summary>Does cleaning change my words?</summary><p>No. The file cleaner and formatter only remove invisible characters and formatting artifacts (blank lines, trailing spaces, stray fences). They never rewrite content or change meaning.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org/versions/latest</a></li>
+        <li>Google's guidance on people-first content and E-E-A-T — <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content" target="_blank" rel="noopener">developers.google.com/search/docs/fundamentals/creating-helpful-content</a></li>
+        <li>Our zero-width character reference — <a href="/zero-width-character/">noatmark.com/zero-width-character</a></li>
+        <li>Our GEO explainer — <a href="/blog/geo-generative-engine-optimization/">noatmark.com/blog/geo-generative-engine-optimization</a></li>
+      </ul>
+
+            <div class="author-bio">
+        <img class="ab-avatar" src="/logo.svg" alt="NoAtMark logo">
+        <div>
+          <b>The NoAtMark Team</b>
+          <p class="muted small">NoAtMark is an independent project focused on text hygiene for the AI age. This article is written and fact-checked by the team; sources are linked under References. Every tool mentioned is free, private, and runs in your browser. <a href="/about/">About us &rarr;</a></p>
+        </div>
+      </div>
+
+<div class="card card-accent" style="margin-top:22px">
+        <h3>Make it a habit</h3>
+        <p>One scan before publishing is all it takes. Editors who clean their AI drafts publish text that reads better <em>and</em> gets picked up more by search and AI engines. The tools are free and private — nothing leaves your browser.</p>
+        <p style="margin-top:10px"><a class="btn btn-primary" href="/tools/pre-publish-inspector/">Inspect an article &rarr;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

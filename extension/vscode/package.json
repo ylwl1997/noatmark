@@ -1,0 +1,23 @@
+{
+  "name": "noatmark-text-hygiene",
+  "displayName": "NoAtMark Text Hygiene",
+  "description": "Strip invisible characters (zero-width, BOM) from your selection, and scan for hidden text. Companion to noatmark.com.",
+  "version": "0.1.1",
+  "publisher": "noatmark",
+  "license": "MIT",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Formatters", "Other"],
+  "keywords": ["invisible characters", "zero-width", "text hygiene", "clean text", "unicode"],
+  "repository": { "type": "git", "url": "https://github.com/ylwl1997/noatmark-text-hygiene" },
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "noatmark.cleanSelection", "title": "NoAtMark: Clean invisible characters in selection" },
+      { "command": "noatmark.scanSelection", "title": "NoAtMark: Scan selection for invisible characters" }
+    ],
+    "keybindings": [
+      { "command": "noatmark.cleanSelection", "key": "ctrl+alt+shift+c", "mac": "cmd+alt+shift+c", "when": "editorTextFocus" },
+      { "command": "noatmark.scanSelection", "key": "ctrl+alt+shift+s", "mac": "cmd+alt+shift+s", "when": "editorTextFocus" }
+    ]
+  }
+}

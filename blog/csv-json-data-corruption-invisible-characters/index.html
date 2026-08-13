@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSV &amp; JSON Corrupted by Invisible Characters — What's Really Breaking Your Data | NoAtMark</title>
+<meta name="description" content="Invisible characters like zero-width spaces and BOMs sneak into CSV and JSON exports, causing import failures, ID mismatches, and phantom duplicates. A practical guide to cleaning your data files.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/blog/csv-json-data-corruption-invisible-characters/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"CSV & JSON Corrupted by Invisible Characters","description":"Invisible characters like zero-width spaces and BOMs sneak into CSV and JSON exports, causing import failures and ID mismatches.","author":{"@type":"Organization","name":"NoAtMark","url":"https://noatmark.com/"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-12","dateModified":"2026-08-12","mainEntityOfPage":"https://noatmark.com/blog/csv-json-data-corruption-invisible-characters/","about":"data hygiene for CSV and JSON files"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://noatmark.com/blog/"},{"@type":"ListItem","position":3,"name":"CSV & JSON Corruption","item":"https://noatmark.com/blog/csv-json-data-corruption-invisible-characters/"}]},
+{"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can a spreadsheet show invisible characters?", "acceptedAnswer": {"@type": "Answer", "text": "Sometimes, but unreliably. A hexdump is definitive; a scan tool is more practical. The file cleaner reports counts grouped by character type."}}, {"@type": "Question", "name": "Will cleaning break my quoting or multiline fields?", "acceptedAnswer": {"@type": "Answer", "text": "No. The cleaner only removes invisible code points; it does not touch delimiters, quotes, or line breaks. Structure stays byte-for-byte identical apart from the removed characters."}}, {"@type": "Question", "name": "Is this caused by AI tools specifically?", "acceptedAnswer": {"@type": "Answer", "text": "Not exclusively, but AI output and copy-paste from the web are common sources. Cleaning exports that passed through those channels is cheap insurance."}}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">For data analysts</p>
+      <h1>CSV &amp; JSON corrupted by <span class="accent">invisible characters</span></h1>
+      <p class="lede">An export that "looks fine" refuses to import. Two IDs that should match don't. A column that shouldn't exist keeps appearing. Often the cause is invisible characters — and they're easy to miss, hard to blame, and quick to fix once you know.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 12, 2026 &middot; 8 min read</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>The data problem in practice</h2>
+      <p>You pull a customer export from a tool, load it into a data warehouse, and a scheduled job starts dropping rows. You run a <code>LEFT JOIN</code> on a key — and a quarter of the rows silently don't match. You check the file in a spreadsheet: everything looks identical. It takes hours — or a hexdump — to find that the values differ by an invisible U+200B.</p>
+      <p>Invisible characters enter data files the same way they enter everything: copying from web pages, AI tools, chat, or files that were themselves assembled from pasted text. Each hop can inject zero-width characters, BOMs, soft hyphens, or special spaces into cell values and JSON keys.</p>
+
+      <h2>Why CSV and JSON are especially vulnerable</h2>
+      <p>CSV and JSON are plain-text formats: every byte matters. A hidden character in a value is still a character:</p>
+      <ul>
+        <li>A zero-width space inside a numeric-looking ID makes it a string and breaks numeric joins.</li>
+        <li>A BOM at the start of a file can make a JSON parser reject the whole document (the BOM must be stripped before parsing).</li>
+        <li>A hidden character in a header becomes a column with a name you can't see.</li>
+      </ul>
+      <p>Data systems validate strictly — a value with an invisible byte is simply not equal to a value without it.</p>
+
+      <h2>The symptoms analysts hit</h2>
+      <table class="ztable">
+        <tr><th>Symptom</th><th>Likely cause</th></tr>
+        <tr><td>Import fails or rows are rejected</td><td>Invisible byte in a value or a BOM at file start</td></tr>
+        <tr><td>Join key doesn't match</td><td>Key differs by invisible characters on one side</td></tr>
+        <tr><td><code>DISTINCT</code> shows "duplicates"</td><td>Two values differ only by invisible bytes</td></tr>
+        <tr><td>A mystery column appears</td><td>Invisible byte in a header name</td></tr>
+        <tr><td>JSON parse error on a "valid" file</td><td>BOM or invisible chars before/inside tokens</td></tr>
+      </table>
+
+      <h2>How to fix it — without breaking the structure</h2>
+      <p>The critical rule for CSV/JSON is: <strong>remove invisible characters only — keep every comma, quote, bracket, and line break.</strong> That's exactly what the <a href="/tools/file-cleaner/">file cleaner</a> does for CSV and JSON: it strips invisible code points and leaves your delimiters and record boundaries untouched.</p>
+      <ol class="steps">
+        <li>Drop your <code>.csv</code> or <code>.json</code> into the file cleaner.</li>
+        <li>Read the scan report — it shows every invisible character found, grouped by type.</li>
+        <li>Clean and download the fixed file. Columns, rows, and structure are preserved.</li>
+      </ol>
+      <p>For teams, the <a href="/api/">text hygiene API</a> can add the same cleaning step to an ETL pipeline so exports are clean before they reach the warehouse.</p>
+
+      <h2>Prevention in your pipeline</h2>
+      <ul>
+        <li><strong>Clean at the source.</strong> Add a cleaning step to exports that pass through web forms, AI tools, or manual copy-paste.</li>
+        <li><strong>Normalise keys.</strong> Where practical, strip invisible characters from IDs and join keys on write.</li>
+        <li><strong>Investigate "phantom" mismatches before the database.</strong> When data looks equal but isn't, check for invisible bytes first — it's faster than querying around the bug.</li>
+        <li><strong>Validate headers.</strong> A quick check for invisible bytes in column names prevents mystery columns.</li>
+      </ul>
+
+      <h2>Honest caveats</h2>
+      <ul>
+        <li>Cleaning invisible characters won't fix malformed CSV quoting or genuinely wrong delimiters — those are different problems.</li>
+        <li>Always review the scan report: in rare cases, a legitimate zero-width character (for example, in an emoji sequence) could be intentional. In data files it almost never is.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Can a spreadsheet show invisible characters?</summary><p>Sometimes — but unreliable. A hexdump is definitive; a scan tool is more practical. The file cleaner shows counts grouped by character type.</p></details>
+      <details><summary>Will cleaning break my quoting or multiline fields?</summary><p>No. The cleaner only removes invisible code points; it doesn't touch delimiters, quotes, or line breaks. Your structure stays byte-for-byte identical apart from the removed characters.</p></details>
+      <details><summary>Is this caused by AI tools specifically?</summary><p>Not exclusively — but AI output and copy-paste from the web are common sources. Cleaning exports that passed through those channels is a cheap insurance.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard (code points &amp; semantics) — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org</a></li>
+        <li>CSV is a text format — every byte matters — <a href="https://www.rfc-editor.org/rfc/rfc4180" target="_blank" rel="noopener">RFC 4180</a></li>
+        <li>Our developer guide to invisible characters — <a href="/blog/invisible-characters-in-code/">noatmark.com/blog/invisible-characters-in-code</a></li>
+      </ul>
+
+            <div class="author-bio">
+        <img class="ab-avatar" src="/logo.svg" alt="NoAtMark logo">
+        <div>
+          <b>The NoAtMark Team</b>
+          <p class="muted small">NoAtMark is an independent project focused on text hygiene for the AI age. This article is written and fact-checked by the team; sources are linked under References. Every tool mentioned is free, private, and runs in your browser. <a href="/about/">About us &rarr;</a></p>
+        </div>
+      </div>
+
+<div class="card card-accent" style="margin-top:22px">
+        <h3>Stop chasing phantom mismatches</h3>
+        <p>Add a 30-second clean to your data imports. Free, private, in-browser.</p>
+        <p style="margin-top:10px"><a class="btn btn-primary" href="/tools/file-cleaner/">Clean a CSV or JSON &rarr;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

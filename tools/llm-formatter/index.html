@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM Text Formatter — Clean Up AI Output Formatting | NoAtMark</title>
+<meta name="description" content="Remove the formatting junk LLM output carries: stray code fences, excess blank lines, trailing spaces, repeated heading hashes, and empty list markers. Free, private, in-browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/tools/llm-formatter/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"LLM Text Formatter","url":"https://noatmark.com/tools/llm-formatter/"},
+{"@type":"WebApplication","name":"NoAtMark LLM Text Formatter","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://noatmark.com/tools/"},{"@type":"ListItem","position":3,"name":"LLM Formatter","item":"https://noatmark.com/tools/llm-formatter/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>LLM text <span class="accent">formatter</span></h1>
+      <p class="lede">Paste messy AI output and strip the formatting junk: stray code fences, excess blank lines, trailing spaces, repeated heading hashes, and empty list markers. Meaning untouched.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — in-browser</span>
+        <span class="badge">&#x2705; <b>formatting only</b> — no content rewrite</span>
+      </div>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false" placeholder="Paste AI output here — with the messy ``` fences, double spacing, and extra blank lines…"></textarea>
+            <div class="scan-actions">
+              <button id="runBtn" class="btn btn-primary">&#x1F9F9; Clean formatting</button>
+              <button id="sampleBtn" class="btn btn-ghost">Try a Sample</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F9F9;</div>
+              <b>Ready to clean</b>
+              <span>Paste messy AI output on the left. Formatting artifacts will be removed here, with a copy button ready.</span>
+            </div>
+            <div id="result" class="result hidden">
+              <div id="stats" class="stats"></div>
+              <textarea id="outText" class="input" readonly></textarea>
+              <div class="scan-actions">
+                <button id="copyBtn" class="btn btn-primary btn-sm">&#x1F4CB; Copy cleaned text</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>What it fixes</h2>
+      <ul>
+        <li><strong>Stray code fences</strong> — lone or unbalanced ``` blocks LLMs sometimes leave behind.</li>
+        <li><strong>Blank-line runs</strong> — 3+ empty lines collapsed to a clean break.</li>
+        <li><strong>Trailing spaces</strong> and CRLF→LF newline normalization.</li>
+        <li><strong>Heading hashes</strong> — #### or deeper normalized to a sensible level.</li>
+        <li><strong>Empty list markers</strong> — bare <code>-</code>, <code>*</code>, <code>1.</code> lines removed.</li>
+      </ul>
+      <h2>Honest limits</h2>
+      <ul>
+        <li>This cleans <em>formatting</em> — it doesn't rewrite words, fix facts, or change meaning.</li>
+        <li>Invisible characters (zero-width, BOM) need the <a href="/zero-width-character/">zero-width remover</a>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/engines/clean.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var cl = window.NoAtMarkClean, T = window.NoAtMarkTool;
+  var emptyState = $("emptyState"), result = $("result");
+  var SAMPLE = 'Intro paragraph.\r\n\r\n\r\n\r\n####### Heading\n\nSome text with extra  spaces   here.\n\n```\n\nAnother line.\n*\n- \n1.\n\nEnd.   \n';
+
+  $("runBtn").addEventListener("click", function () {
+    var r = cl.cleanLLMText($("input").value);
+    emptyState.classList.add("hidden");
+    result.classList.remove("hidden");
+    $("outText").value = r.cleaned;
+    var stats = r.stats;
+    $("stats").innerHTML = '<span class="chip" style="background:var(--mint-subtle);color:var(--mint)">&#x2705; cleaned</span> ' +
+      (stats.blankLines ? stats.blankLines + " blank-line runs · " : "") +
+      (stats.trailingSpaces ? stats.trailingSpaces + " trailing-space lines · " : "") +
+      (stats.headings ? stats.headings + " over-deep headings · " : "") +
+      (r.changed ? "fixed" : "nothing to fix");
+  });
+
+  $("sampleBtn").addEventListener("click", function () { $("input").value = SAMPLE; });
+  $("clearBtn").addEventListener("click", function () {
+    $("input").value = ""; $("outText").value = "";
+    result.classList.add("hidden"); emptyState.classList.remove("hidden");
+  });
+  $("copyBtn").addEventListener("click", function () {
+    T.copyText($("outText").value).then(function (ok) { T.flash($("copyBtn"), ok ? "Copied!" : "Copy failed"); });
+  });
+})();
+</script>
+</body>
+</html>

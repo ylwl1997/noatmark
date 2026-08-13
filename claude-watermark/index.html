@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Text Watermark — What It Is &amp; What It Means | NoAtMark</title>
+<meta name="description" content="What Claude's invisible text watermark actually is: embedded statistical watermarks, C2PA on files, EU AI Act Article 50, and an honest look at what can and can't be removed.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/claude-watermark/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"Claude Text Watermark","url":"https://noatmark.com/claude-watermark/"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Claude Watermark","item":"https://noatmark.com/claude-watermark/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Does Claude watermark text?","acceptedAnswer":{"@type":"Answer","text":"Yes. Claude models launched on or after August 2, 2026 weave an imperceptible statistical watermark into generated text, at the model level, worldwide."}},
+{"@type":"Question","name":"Can you remove Claude's watermark?","acceptedAnswer":{"@type":"Answer","text":"Not with current public tooling. Anthropic has not shipped a public detector, and a statistical signal in word choice can't be stripped like a character can. Heavy editing may weaken it, but no honest third-party tool claims to remove it."}},
+{"@type":"Question","name":"Does the watermark apply to files too?","acceptedAnswer":{"@type":"Answer","text":"Yes — generated files such as .svg, .png, and .jpg get signed C2PA provenance metadata. That metadata can be stripped, but removing it is detectable."}},
+{"@type":"Question","name":"What does a detected mark prove?","acceptedAnswer":{"@type":"Answer","text":"Only that content may have been processed by Claude. It doesn't prove authorship — Claude used to proofread or translate human text also carries the mark."}}
+]}]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>Claude's invisible text watermark, <span class="accent">explained honestly</span></h1>
+      <p class="lede">On August 11, 2026 Anthropic confirmed it watermarks Claude's output. Here's exactly how it works, what it means for you, and what you actually can — and can't — do about it.</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>What Claude does</h2>
+      <p>Claude models released on or after <strong>August 2, 2026</strong> mark output in two ways, everywhere Claude is offered:</p>
+      <ul>
+        <li><strong>Embedded text watermark.</strong> An imperceptible <a href="/glossary/#core">statistical watermark</a> woven into the words at the model level. Invisible, doesn't change meaning, survives copy-paste.</li>
+        <li><strong>Signed C2PA metadata on files.</strong> Generated <code>.svg</code>, <code>.png</code>, and <code>.jpg</code> files carry cryptographically signed <a href="/c2pa/">C2PA provenance</a>.</li>
+      </ul>
+      <p>It applies across the API, Claude, Claude Code, Claude Cowork, and Claude Tag — and can't be turned off by a paid tier or setting. The driver is <a href="/glossary/#regulatory">EU AI Act Article 50</a>.</p>
+
+      <h2>What a detected mark does and doesn't prove</h2>
+      <p>A mark means the content <em>may have been processed by Claude</em>. It does <strong>not</strong> prove authorship. If a human writes 900 words and asks Claude to tighten the prose, the output carries a mark. Conversely, <strong>no mark proves nothing</strong>: text from older models, heavily rewritten text, or very short passages may carry no detectable signal.</p>
+
+      <h2 id="can-i-remove">Can I remove the watermark?</h2>
+      <p>Honest answer: <strong>not with public tooling today.</strong> Anthropic has not shipped a public detector, and a statistical signal in word choice isn't a character you can strip. Tools that claim to "remove Claude's watermark" are selling something that doesn't exist. What <em>is</em> removable is the visible-invisible stuff — the <a href="/zero-width-character/">zero-width and hidden Unicode characters</a> that slip into copied text. That's exactly what NoAtMark cleans.</p>
+
+      <h2 id="why-not">Our stance on "bypass" tools</h2>
+      <p>We don't build watermark-removers or detector-bypass tools. Stripping C2PA provenance or laundering text to hide AI usage fights transparency mechanisms, and the "evade detection" claims are statistically unreliable anyway. We build <strong>text hygiene</strong>: find and remove invisible characters, and rewrite text to read naturally — <a href="/humanizer/">not to fool detectors</a>.</p>
+
+      <div class="card card-accent" style="margin-top:20px">
+        <h3>See the invisible characters in your Claude output</h3>
+        <p>Paste any text — especially copied from Claude — and highlight every hidden Unicode and zero-width character, then clean it with one click.</p>
+        <a class="btn btn-primary" href="/">&#x1F50D; Open the scanner</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

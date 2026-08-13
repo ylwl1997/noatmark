@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero Width Space (U+200B) — Why It Breaks Code &amp; How to Remove It | NoAtMark</title>
+<meta name="description" content="The zero width space (U+200B) is an invisible character that breaks string matching, validation, and code. What it is, why it appears, and how to remove it in one click.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/characters/zero-width-space/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"TechArticle","headline":"Zero Width Space (U+200B): The Invisible Character Breaking Your Code","description":"What the zero width space is, why it appears in copied text, and how to remove it.","author":{"@type":"Organization","name":"NoAtMark"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-13","mainEntityOfPage":"https://noatmark.com/characters/zero-width-space/"},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is a zero width space?","acceptedAnswer":{"@type":"Answer","text":"A zero width space (U+200B) is a Unicode character that occupies no visible space but still counts as a character. It breaks string matching, validation, and code because two strings that look identical can differ by it."}},
+{"@type":"Question","name":"Why does my text have zero width spaces?","acceptedAnswer":{"@type":"Answer","text":"Copy-paste from web pages, AI assistants, editors, and chat apps can silently insert them, often for line-breaking or formatting. You never see them."}},
+{"@type":"Question","name":"How do I remove zero width spaces?","acceptedAnswer":{"@type":"Answer","text":"Paste the text into the scanner below or the file cleaner. It finds every U+200B and strips it on your command."}}
+]},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Characters","item":"https://noatmark.com/characters/"},{"@type":"ListItem","position":3,"name":"Zero Width Space","item":"https://noatmark.com/characters/zero-width-space/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Invisible character reference · U+200B</p>
+      <h1>Zero Width Space <span class="accent">(U+200B)</span></h1>
+      <p class="lede">A space that takes up no space. It renders as nothing, counts as a character, and quietly breaks string matching, validation, and code. Here's the plain-English guide — and a one-click remover.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 13, 2026</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>The short version</h2>
+      <table class="ztable">
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Name</td><td>Zero Width Space (ZWSP)</td></tr>
+        <tr><td>Code point</td><td><code>U+200B</code></td></tr>
+        <tr><td>UTF-8 bytes</td><td><code>E2 80 8B</code></td></tr>
+        <tr><td>Appearance</td><td>Invisible — takes up no space</td></tr>
+        <tr><td>Danger</td><td>Breaks matching, validation, and code</td></tr>
+      </table>
+
+      <h2>Why it breaks things</h2>
+      <p>Per the <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">Unicode Standard</a>, U+200B is a valid character intended to allow line breaking without a visible space. The problem is <strong>unintentional</strong> appearance: when it lands inside an identifier, a string, or a data field, it becomes a real byte that differs from what you expect.</p>
+      <ul>
+        <li><strong>Code.</strong> Two strings that "look" identical aren't equal; a compiler or interpreter can reject a token containing an invisible byte. This is a common cause of <em>"Uncaught SyntaxError: Invalid or unexpected token"</em> and "unknown character" errors.</li>
+        <li><strong>Validation.</strong> Forms and validators count it as a character, so a "valid" input can fail length or pattern checks.</li>
+        <li><strong>Data.</strong> In CSV and JSON, it corrupts matching and imports. (See <a href="/blog/csv-json-data-corruption-invisible-characters/">the data guide</a>.)</li>
+        <li><strong>Tracking.</strong> Some systems embed zero-width characters as invisible fingerprints or trackers in copied text. Removing them clears that.</li>
+      </ul>
+
+      <h2>Where it comes from</h2>
+      <p>Zero width spaces slip in through copy-paste from web pages, AI assistants, rich-text editors, chat apps, and PDFs — anywhere line-breaking or invisible layout is involved.</p>
+
+      <h2>Remove it in one click</h2>
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false" placeholder="Paste text with zero width spaces here…"></textarea>
+            <div class="scan-actions">
+              <button id="scanBtn" class="btn btn-primary">&#x1F50D; Scan</button>
+              <button id="cleanBtn" class="btn btn-ghost">Clean &amp; copy</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="result" class="highlighted" style="min-height:150px">Paste text on the left, then hit Scan to see every zero width space (U+200B) highlighted.</div>
+          </div>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:10px">For whole files (TXT, DOCX, CSV, JSON), use the <a href="/tools/file-cleaner/">file cleaner</a> — it handles all invisible characters at once.</p>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Is a zero width space the same as a normal space?</summary><p>No. A normal space (U+0020) occupies width and is visible (as a gap). A zero width space takes up no space at all but still counts as a character.</p></details>
+      <details><summary>How do I see zero width spaces?</summary><p>They're invisible by definition. A hexdump shows <code>E2 80 8B</code>; a scanner (like the one above) is the practical way.</p></details>
+      <details><summary>Could a zero width space be a tracking mark?</summary><p>Yes. Zero-width characters are a known technique for embedding invisible fingerprints in text to identify copies or leaks. Removing them clears that signal.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org</a></li>
+        <li>Why invisible characters break code — <a href="/blog/invisible-characters-in-code/">noatmark.com/blog/invisible-characters-in-code</a></li>
+        <li>Zero-width &amp; invisible character remover — <a href="/zero-width-character/">noatmark.com/zero-width-character</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/engines/scan.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var sc = window.NoAtMarkScan, T = window.NoAtMarkTool;
+  var input = document.getElementById("input"), result = document.getElementById("result");
+  function doScan() {
+    var text = input.value;
+    var h = sc.scanHidden(text);
+    var zwsp = h.matches.filter(function (m) { return m.cp === 0x200B; }).length;
+    result.innerHTML = h.total === 0
+      ? '<span class="empty-note">&#x2705; No zero width spaces found.</span>'
+      : '<span class="chip" style="background:var(--amber-glow);color:var(--amber)">&#x26A0;&#xFE0F; ' + zwsp + ' U+200B found</span>' + (h.total > zwsp ? ' + ' + (h.total - zwsp) + ' other invisible' : '') + '<br><br>' + h.matches.slice(0, 20).map(function (m) { return 'U+' + m.cp.toString(16).toUpperCase().padStart(4, '0') + ' @' + m.index; }).join('<br>');
+  }
+  document.getElementById("scanBtn").addEventListener("click", doScan);
+  document.getElementById("cleanBtn").addEventListener("click", function () {
+    var cleaned = sc.stripInvisible(input.value);
+    T.copyText(cleaned).then(function (ok) { T.flash(document.getElementById("cleanBtn"), ok ? "Copied clean text!" : "Copy failed"); });
+  });
+})();
+</script>
+</body>
+</html>

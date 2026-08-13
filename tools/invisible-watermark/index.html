@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invisible Watermark Generator — Add &amp; Verify Hidden Text Watermarks | NoAtMark</title>
+<meta name="description" content="Embed an invisible, keyed watermark into your text to prove ownership and track copies — or verify whether text carries a watermark. Free, private, in-browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/tools/invisible-watermark/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"Invisible Watermark Generator","url":"https://noatmark.com/tools/invisible-watermark/"},
+{"@type":"WebApplication","name":"NoAtMark Invisible Watermark Generator","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://noatmark.com/tools/"},{"@type":"ListItem","position":3,"name":"Invisible Watermark","item":"https://noatmark.com/tools/invisible-watermark/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>Invisible watermark <span class="accent">generator</span></h1>
+      <p class="lede">Embed a hidden, keyed watermark into your text to prove ownership and track copies. Only someone with your key can verify it. Free, private, in-browser.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>keyed</b> — only you can verify</span>
+        <span class="badge">&#x1F50D; <b>invisible</b> — zero-width characters</span>
+        <span class="badge">&#x1F9F9; <b>removable</b> — strip anytime</span>
+      </div>
+
+      <div class="tabs">
+        <button id="tabAdd" class="tab active">&#x2795; Add watermark</button>
+        <button id="tabVerify" class="tab">&#x2705; Verify</button>
+      </div>
+
+      <!-- ADD MODE -->
+      <div id="modeAdd" class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="inText" class="input" spellcheck="false" placeholder="Your text — an article, a post, a contract clause…"></textarea>
+            <div class="two-col">
+              <input id="inPayload" class="input input-sm" placeholder="Watermark payload (e.g. noatmark.com/you)">
+              <input id="inKey" class="input input-sm" placeholder="Secret key (only you know it)">
+            </div>
+            <div class="scan-actions">
+              <button id="embedBtn" class="btn btn-primary">&#x1F512; Embed watermark</button>
+              <button id="fillBtn" class="btn btn-ghost">Try sample</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="addEmpty" class="empty-state">
+              <div class="es-icon">&#x1F512;</div>
+              <b>Watermark it</b>
+              <span>Add your text, a payload, and a key. The watermark is appended invisibly — copy and publish with confidence.</span>
+            </div>
+            <div id="addResult" class="result hidden">
+              <div id="addStats" class="stats"></div>
+              <div id="addOut" class="highlighted"></div>
+              <div class="scan-actions">
+                <button id="copyWmBtn" class="btn btn-primary btn-sm">&#x1F4CB; Copy watermarked text</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VERIFY MODE -->
+      <div id="modeVerify" class="scanner hidden">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="verText" class="input" spellcheck="false" placeholder="Paste the (possibly watermarked) text here…"></textarea>
+            <div class="two-col">
+              <input id="verPayload" class="input input-sm" placeholder="Expected payload (optional)">
+              <input id="verKey" class="input input-sm" placeholder="Secret key">
+            </div>
+            <div class="scan-actions">
+              <button id="verifyBtn" class="btn btn-primary">&#x1F50D; Verify</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="verEmpty" class="empty-state">
+              <div class="es-icon">&#x1F9EA;</div>
+              <b>Check a watermark</b>
+              <span>Paste text and your key. We'll extract and report the embedded watermark — or tell you there is none.</span>
+            </div>
+            <div id="verResult" class="result hidden">
+              <div id="verStats" class="stats"></div>
+              <div id="verOut" class="highlighted"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>How it works</h2>
+      <ul>
+        <li><strong>Embed.</strong> Your payload is encoded as zero-width characters and appended invisibly to your text, obfuscated with your key.</li>
+        <li><strong>Publish.</strong> The text looks normal to readers — but carries your hidden mark.</li>
+        <li><strong>Verify.</strong> Anyone with your key can extract the payload to prove the text is yours.</li>
+        <li><strong>Remove.</strong> Paste watermarked text into the <a href="/zero-width-character/">zero-width remover</a> to strip the invisible characters.</li>
+      </ul>
+      <h2>Honest limits</h2>
+      <ul>
+        <li>Watermarking text isn't proof in court — it's a practical ownership signal, not a legal seal.</li>
+        <li>Heavy editing, reformatting, or copy-paste through some systems can drop the invisible characters.</li>
+        <li>Keep your key secret: anyone with the key can both verify and strip the watermark.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/engines/watermark.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var tabAdd = $("tabAdd"), tabVerify = $("tabVerify");
+  var modeAdd = $("modeAdd"), modeVerify = $("modeVerify");
+  var addEmpty = $("addEmpty"), addResult = $("addResult");
+  var verEmpty = $("verEmpty"), verResult = $("verResult");
+  var wm = window.NoAtMarkWatermark, T = window.NoAtMarkTool;
+
+  function switchTab(add) {
+    tabAdd.classList.toggle("active", add);
+    tabVerify.classList.toggle("active", !add);
+    modeAdd.classList.toggle("hidden", !add);
+    modeVerify.classList.toggle("hidden", add);
+  }
+  tabAdd.addEventListener("click", function () { switchTab(true); });
+  tabVerify.addEventListener("click", function () { switchTab(false); });
+
+  // ADD
+  $("embedBtn").addEventListener("click", function () {
+    var text = $("inText").value;
+    var payload = $("inPayload").value.trim();
+    var key = $("inKey").value;
+    if (!text.trim()) return;
+    var payloadDefault = payload || "noatmark.com";
+    var out = wm.embed(text, payloadDefault, key);
+    addEmpty.classList.add("hidden");
+    addResult.classList.remove("hidden");
+    $("addOut").textContent = out;
+    $("addStats").innerHTML = '<span class="chip" style="background:var(--mint-subtle);color:var(--mint)">&#x2705; watermarked</span> payload: <b style="color:var(--mint)">' + T.esc(payloadDefault) + '</b> &middot; +' + (out.length - text.length) + ' invisible chars';
+  });
+
+  $("fillBtn").addEventListener("click", function () {
+    $("inText").value = "This is an original article about text hygiene in the AI era. All rights reserved.";
+    $("inPayload").value = "noatmark.com/youliqn";
+    $("inKey").value = "my-secret-key";
+  });
+
+  $("copyWmBtn").addEventListener("click", function () {
+    T.copyText($("addOut").textContent).then(function (ok) {
+      T.flash($("copyWmBtn"), ok ? "Copied!" : "Copy failed");
+    });
+  });
+
+  // VERIFY
+  $("verifyBtn").addEventListener("click", function () {
+    var text = $("verText").value;
+    var key = $("verKey").value;
+    if (!text.trim()) return;
+    var extracted = wm.extract(text, key);
+    var expected = $("verPayload").value.trim();
+    verEmpty.classList.add("hidden");
+    verResult.classList.remove("hidden");
+    var stats = $("verStats"), out = $("verOut");
+    if (extracted === null) {
+      stats.innerHTML = '<span class="chip" style="background:var(--amber-glow);color:var(--amber)">&#x26A0;&#xFE0F; no watermark found</span>';
+      out.innerHTML = '<p class="muted" style="font-size:13px">No NoAtMark watermark detected. Note: absence proves nothing — watermarks can be stripped, or the text may use a different scheme.</p>';
+    } else if (expected && extracted !== expected) {
+      stats.innerHTML = '<span class="chip" style="background:var(--red-glow);color:var(--red)">&#x2717; payload mismatch</span>';
+      out.textContent = "Extracted: " + extracted + "\nExpected: " + expected;
+    } else {
+      stats.innerHTML = '<span class="chip" style="background:var(--mint-subtle);color:var(--mint)">&#x2705; watermark verified</span>';
+      out.textContent = "Extracted payload: " + extracted;
+    }
+  });
+
+  switchTab(true);
+})();
+</script>
+</body>
+</html>

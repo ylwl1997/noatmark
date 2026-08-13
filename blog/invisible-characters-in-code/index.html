@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invisible Characters in Code: The Bug You Can't See | NoAtMark</title>
+<meta name="description" content="Zero-width spaces and hidden Unicode characters in copied code break string matching, validation, and can hide injection. How to find and remove invisible characters from your code.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/blog/invisible-characters-in-code/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Article","headline":"Invisible Characters in Code: The Bug You Can't See","description":"Zero-width spaces and hidden Unicode characters in copied code break string matching, validation, and can hide injection.","author":{"@type":"Organization","name":"NoAtMark","url":"https://noatmark.com/"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-12","dateModified":"2026-08-12","mainEntityOfPage":"https://noatmark.com/blog/invisible-characters-in-code/","about":"invisible characters and Unicode security in software"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://noatmark.com/blog/"},{"@type":"ListItem","position":3,"name":"Invisible Characters in Code","item":"https://noatmark.com/blog/invisible-characters-in-code/"}]},
+{"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I see invisible characters in my editor?", "acceptedAnswer": {"@type": "Answer", "text": "Most editors have a show-whitespace or show-invisible toggle, and some linters flag zero-width characters. But it is easy to miss; a dedicated scan is more reliable."}}, {"@type": "Question", "name": "Is this a security vulnerability by itself?", "acceptedAnswer": {"@type": "Answer", "text": "Invisible characters are not inherently a vulnerability, but they can enable or obscure injection, including Trojan-Source-style bidi attacks, and they cause real availability bugs such as matching and validation failures."}}, {"@type": "Question", "name": "Does cleaning change my code?", "acceptedAnswer": {"@type": "Answer", "text": "No. Cleaning removes invisible characters only. Identifiers, strings, and structure are unchanged, and the scan report tells you exactly what was removed."}}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">For programmers</p>
+      <h1>Invisible characters in code: <span class="accent">the bug you can't see</span></h1>
+      <p class="lede">Two strings that look identical refuse to match. A validator rejects a valid ID. A copied snippet quietly breaks a build. The culprit is often an invisible character — and you can't fix what you can't see.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 12, 2026 &middot; 9 min read</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>A debugging story</h2>
+      <p>You paste an API key from a dashboard into a config file. The key "looks" right. Every integration returns 401. You compare the key against the dashboard character-by-character — identical. Then you hexdump it and find <code>e2 80 8b</code> (UTF-8 for U+200B) hiding inside. That one invisible byte is why nothing authenticates.</p>
+      <p>This isn't exotic. Zero-width characters get into code through the same channels every developer uses: copying from web pages, AI assistants, docs, chat, and even email. The characters are legitimate Unicode; their <em>unintentional</em> presence in identifiers, strings, and config is the bug.</p>
+
+      <h2>How they get in</h2>
+      <p>Invisible Unicode characters — zero-width space (<code>U+200B</code>), zero-width joiner (<code>U+200D</code>), BOM (<code>U+FEFF</code>), soft hyphen (<code>U+00AD</code>), direction marks (<code>U+200E</code>/<code>U+200F</code>) — render as nothing but count as characters. When you copy code from a source that contains them, your editor often displays nothing and your toolchain counts the invisible byte.</p>
+
+      <h2>The symptoms</h2>
+      <h3>1. String matching fails</h3>
+      <pre class="code-block">// This looks like it should be true:
+if ("user" === "user") { /* never runs */ }
+// One of these strings contains a hidden U+200B.</pre>
+
+      <h3>2. Validation rejects valid input</h3>
+      <p>IDs, keys, phone numbers, and email addresses with an invisible byte fail regex or length checks even though they "look" valid. The classic case: a 16-character key that's actually 17 bytes.</p>
+
+      <h3>3. CSV and JSON break</h3>
+      <p>Invisible characters in a field can split a record, produce an unexpected column, or make two "identical" rows unequal. (See the <a href="/blog/csv-json-data-corruption-invisible-characters/">data article</a> for the analyst's view.)</p>
+
+      <h3>4. Security: hidden injection and Trojan-Source</h3>
+      <p>Attackers can abuse invisible and bidirectional characters to hide malicious content. The <a href="https://en.wikipedia.org/wiki/Trojan-Source" target="_blank" rel="noopener">Trojan-Source</a> research (Boucher &amp; Anderson, 2021) showed how invisible bidi controls and zero-width characters can make code appear to do one thing while the compiler reads another. This class of issue is why security guidance — from <a href="https://owasp.org/" target="_blank" rel="noopener">OWASP</a> to CWE — warns about ambiguous Unicode in source.</p>
+
+      <h2>How to find and fix it</h2>
+      <h3>Detect it first</h3>
+      <p>Because the characters are invisible, you need a scanner. Paste the suspicious text (or a whole file) into the <a href="/tools/file-cleaner/">file cleaner</a>. It scans first and reports every invisible character by type and count — before it touches anything. For quick pastes, the <a href="/zero-width-character/">invisible character remover</a> works on any text.</p>
+      <h3>Then clean deliberately</h3>
+      <p>Only after you've seen the report should you clean. The file cleaner strips invisible characters on your command and tells you how many it removed — so you always know what changed.</p>
+
+      <h2>Preventing it in your workflow</h2>
+      <ul>
+        <li><strong>Clean AI-generated code before committing.</strong> Copying code out of ChatGPT or Claude is a common source. A one-pass clean removes the risk.</li>
+        <li><strong>Scan untrusted input.</strong> Anything you paste into a prompt, a database, or a config file from an external source should pass a <a href="/tools/prompt-injection-scanner/">hidden-text scan</a>.</li>
+        <li><strong>Automate the habit.</strong> The <a href="/extension/">NoAtMark browser extension</a> strips invisible characters automatically when you copy — or use the <a href="/extension/">VS Code extension</a> to clean a selection directly in your editor (<code>Ctrl+Alt+Shift+C</code>).</li>
+        <li><strong>Add a CI guard.</strong> For teams, the <a href="/api/">text hygiene API</a> can flag invisible characters in commits before they merge.</li>
+      </ul>
+
+      <h2>Real-world caveats</h2>
+      <ul>
+        <li>Some legitimate uses of zero-width characters exist (e.g., in text layout or emoji sequences). The file cleaner removes them from code and data where they're almost certainly unintended — but always review the scan report first.</li>
+        <li>Tools that claim to "remove AI watermarks" are a different category and, for statistical watermarks, can't work without the provider's key. Cleaning invisible <em>characters</em> is well-defined; <a href="/claude-watermark/">that is not</a>.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Can I see invisible characters in my editor?</summary><p>Yes, most editors have a "show whitespace" or "show invisible" toggle, and some linters flag zero-width characters. But it's easy to miss. A dedicated scan is more reliable.</p></details>
+      <details><summary>Is this a security vulnerability by itself?</summary><p>Invisible characters aren't inherently a vulnerability, but they can enable or obscure injection (including Trojan-Source-style bidi attacks), and they cause real availability bugs (matching/validation failures). Treat them as a code-hygiene and security-hygiene issue.</p></details>
+      <details><summary>Does cleaning change my code?</summary><p>No. Cleaning removes invisible characters only — identifiers, strings, and structure are unchanged. The scan report tells you exactly what was removed.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard (code points &amp; semantics) — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org</a></li>
+        <li>Trojan-Source: Invisible Vulnerabilities (Boucher &amp; Anderson) — <a href="https://trojansource.codes/" target="_blank" rel="noopener">trojansource.codes</a></li>
+        <li>OWASP guidance on input validation and encoding — <a href="https://owasp.org/" target="_blank" rel="noopener">owasp.org</a></li>
+        <li>NoAtMark file cleaner — <a href="/tools/file-cleaner/">noatmark.com/tools/file-cleaner</a></li>
+      </ul>
+
+            <div class="author-bio">
+        <img class="ab-avatar" src="/logo.svg" alt="NoAtMark logo">
+        <div>
+          <b>The NoAtMark Team</b>
+          <p class="muted small">NoAtMark is an independent project focused on text hygiene for the AI age. This article is written and fact-checked by the team; sources are linked under References. Every tool mentioned is free, private, and runs in your browser. <a href="/about/">About us &rarr;</a></p>
+        </div>
+      </div>
+
+<div class="card card-accent" style="margin-top:22px">
+        <h3>Stop debugging invisible bytes</h3>
+        <p>Add a 10-second scan to your copy-paste habit. The tools are free, private, and run entirely in your browser.</p>
+        <p style="margin-top:10px"><a class="btn btn-primary" href="/tools/file-cleaner/">Clean a file &rarr;</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

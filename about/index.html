@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About NoAtMark — Text Hygiene for the AI Age</title>
+<meta name="description" content="Who builds NoAtMark, how the tools work and are verified, and the standards and transparency behind the text-hygiene toolkit.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/about/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","name":"NoAtMark","url":"https://noatmark.com/","logo":"https://noatmark.com/logo.svg","email":"hello@noatmark.com","description":"Text hygiene for the AI age — free, private, in-browser tools that strip invisible characters and clean AI output."},
+{"@type":"WebPage","name":"About NoAtMark","url":"https://noatmark.com/about/"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"About","item":"https://noatmark.com/about/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>About <span class="accent">NoAtMark</span></h1>
+      <p class="lede">NoAtMark is a text-hygiene toolkit for the AI age: free, private, in-browser tools that strip invisible characters and clean AI output. Built on a simple rule — <strong>your text stays on your device.</strong></p>
+    </section>
+
+    <section class="info wrap">
+      <h2>Why we built it</h2>
+      <p>Copying from ChatGPT, Claude, or the modern web quietly drags in invisible characters — zero-width spaces, joiners, BOMs, variation selectors. These hidden bytes break string matching, corrupt CSV and JSON, trigger spam flags, and confuse AI search engines. Most people never see them until a bug costs them hours.</p>
+      <p>NoAtMark exists to make text hygiene a one-click habit: paste or upload a file, <em>see</em> what's hidden, and clean it — entirely in your browser.</p>
+
+      <h2>How the tools work</h2>
+      <p>Every tool is built on small, deterministic engines (<code>scan</code>, <code>clean</code>, <code>plaintext</code>, <code>watermark</code>, <code>inspect</code>) that run <strong>locally on your device</strong>. No text or files are uploaded. The same engines power the web tools, the JSON API, and the browser/VS Code extensions, so behavior is consistent everywhere.</p>
+
+      <h2>Accuracy &amp; verification</h2>
+      <ul>
+        <li><strong>Deterministic.</strong> Invisible-character detection is based on the <a href="https://home.unicode.org/" target="_blank" rel="noopener">Unicode Standard</a> code points — not guesses. Our engines are tested against real copied content.</li>
+        <li><strong>Honest scope.</strong> We clean invisible <em>characters</em> and formatting artifacts. We do <strong>not</strong> claim to remove statistical AI watermarks (that requires a model provider's private key) or to bypass detectors. <a href="/claude-watermark/">Read why &rarr;</a></li>
+        <li><strong>Transparent scores.</strong> The <a href="/tools/pre-publish-inspector/">Pre-Publish Inspector</a> GEO score explains exactly why it is what it is — every sub-score lists its reasons.</li>
+      </ul>
+
+      <h2>What we follow</h2>
+      <ul>
+        <li>Unicode character semantics for detection (<a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">Unicode Standard</a>).</li>
+        <li>Content-provenance standards (<a href="/c2pa/">C2PA</a>) for image transparency.</li>
+        <li>Public transparency rules (<a href="/glossary/#regulatory">EU AI Act Article 50</a>) — which is why our pages explain marks rather than help evade them.</li>
+      </ul>
+
+      <h2>Trust &amp; transparency</h2>
+      <ul>
+        <li><strong>Privacy.</strong> Nothing you process is collected or stored. See the <a href="/privacy/">privacy policy</a>.</li>
+        <li><strong>Openness.</strong> The core engines are published on <a href="https://github.com/ylwl1997/noatmark-text-hygiene" target="_blank" rel="noopener">GitHub</a>, on <a href="https://pypi.org/project/noatmark-text-hygiene/" target="_blank" rel="noopener">PyPI</a>, and on <a href="https://www.npmjs.com/package/noatmark-text-hygiene" target="_blank" rel="noopener">npm</a>.</li>
+        <li><strong>No dark patterns.</strong> We don't overclaim, we don't hide our limitations, and we don't make guarantees search engines can't back.</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>Questions, feedback, or bugs: <a href="mailto:hello@noatmark.com">hello@noatmark.com</a>.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

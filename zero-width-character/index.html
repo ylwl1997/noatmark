@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero-Width &amp; Invisible Character Remover — Strip Trackers &amp; Hidden Marks | NoAtMark</title>
+<meta name="description" content="Strip invisible watermarks, tracking codes, and hidden characters (U+200B, U+200C, ZWJ, BOM) from any text. Millisecond cleaning, free, private, in-browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/zero-width-character/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"Zero-Width Character Scanner","url":"https://noatmark.com/zero-width-character/"},
+{"@type":"WebApplication","name":"NoAtMark Zero-Width Character Scanner","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is a zero-width character?","acceptedAnswer":{"@type":"Answer","text":"A zero-width character is a Unicode code point that takes up no visible space, such as the zero-width space U+200B, zero-width joiner U+200D, and zero-width non-joiner U+200C. It occupies bytes but renders as nothing."}},
+{"@type":"Question","name":"How do I find zero-width characters?","acceptedAnswer":{"@type":"Answer","text":"Paste your text into the scanner below. It highlights every zero-width and invisible character and tells you what each one is, then you can clean them with one click."}},
+{"@type":"Question","name":"Why does my text have zero-width characters?","acceptedAnswer":{"@type":"Answer","text":"AI assistants, copy-paste from web pages, word processors, and translation tools can silently insert them. They cause form validation failures, broken searches, and formatting problems."}}
+]}]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>Strip invisible <span class="accent">trackers &amp; hidden marks</span></h1>
+      <p class="lede">Zero-width characters (U+200B, U+200C, ZWJ, BOM) are used as hidden watermarks and tracking codes. Paste any text and strip them in milliseconds — free, private, in-browser.</p>
+      <p class="privacy">&#x1F512; Runs 100% in your browser. Nothing is uploaded.</p>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false" placeholder="Paste text here — especially text copied from ChatGPT, Claude, or any web page…"></textarea>
+            <div class="scan-actions">
+              <button id="scanBtn" class="btn btn-primary">&#x1F50D; Scan</button>
+              <button id="sampleBtn" class="btn btn-ghost">Try sample</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F50D;</div>
+              <b>Ready to scan</b>
+              <span>Paste text on the left, then hit Scan. Every invisible &amp; zero-width character will be highlighted right here.</span>
+            </div>
+            <div id="result" class="result hidden">
+              <div class="result-head">
+                <div id="stats" class="stats"></div>
+                <div class="result-actions">
+                  <button id="cleanBtn" class="btn btn-primary btn-sm">&#x1F9F9; Clean &amp; copy</button>
+                  <button id="copyCleanBtn" class="btn btn-ghost btn-sm" disabled>Copy cleaned</button>
+                </div>
+              </div>
+              <div class="options">
+                <label class="opt"><input type="checkbox" id="optKeepBom"> Keep BOM (U+FEFF)</label>
+                <label class="opt"><input type="checkbox" id="optKeepSpecial"> Keep special spaces (U+2000–U+200A, NBSP)</label>
+                <label class="opt"><input type="checkbox" id="optKeepCtrl"> Keep control characters</label>
+              </div>
+              <div id="highlighted" class="highlighted" dir="ltr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>Common zero-width characters</h2>
+      <table class="ztable">
+        <tr><th>Name</th><th>Code point</th><th>Short</th><th>Where it comes from</th></tr>
+        <tr><td>Zero Width Space</td><td><code>U+200B</code></td><td>ZWSP</td><td>Editors, soft line breaks, AI output</td></tr>
+        <tr><td>Zero Width Non-Joiner</td><td><code>U+200C</code></td><td>ZWNJ</td><td>Arabic/Persian shaping, copied text</td></tr>
+        <tr><td>Zero Width Joiner</td><td><code>U+200D</code></td><td>ZWJ</td><td>Emoji sequences, AI output</td></tr>
+        <tr><td>Word Joiner</td><td><code>U+2060</code></td><td>WJ</td><td>Prevents line breaks, copied from PDFs</td></tr>
+        <tr><td>Byte Order Mark</td><td><code>U+FEFF</code></td><td>BOM</td><td>UTF-8 files, copy-paste from documents</td></tr>
+        <tr><td>Soft Hyphen</td><td><code>U+00AD</code></td><td>SHY</td><td>Automatic hyphenation artifacts</td></tr>
+        <tr><td>Variation Selectors</td><td><code>U+FE00–U+FE0F</code></td><td>VS</td><td>Emoji presentation, copied text</td></tr>
+      </table>
+
+      <h2>Why they break things</h2>
+      <ul>
+        <li><strong>Validation failures</strong> — forms and APIs reject strings that "look" fine but carry invisible bytes.</li>
+        <li><strong>Broken search &amp; matching</strong> — two strings that look identical won't match because of hidden code points.</li>
+        <li><strong>Invisible content injection</strong> — hidden text can smuggle data into comments, reviews, or config files.</li>
+        <li><strong>Unexpected layout</strong> — zero-width joiners and word joiners change how text wraps and renders.</li>
+      </ul>
+      <p><a href="/claude-watermark/">Claude and other AI tools</a> are a common source of these artifacts in copied output. Clean them before pasting into your editor, CMS, or code.</p>
+
+      <div class="card card-accent" style="margin-top:20px">
+        <h3>Want to make AI text read naturally too?</h3>
+        <p>NoAtMark's <a href="/humanizer/">Humanize</a> rewrites AI output with tone control — coming soon.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/scanner.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

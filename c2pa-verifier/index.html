@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2PA Checker — Verify Content Credentials in Your Images | NoAtMark</title>
+<meta name="description" content="Check whether a PNG, JPEG, WEBP, or SVG carries C2PA / Content Credentials provenance. Free, private, in-browser — nothing is uploaded.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/c2pa-verifier/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"C2PA Checker","url":"https://noatmark.com/c2pa-verifier/"},
+{"@type":"WebApplication","name":"NoAtMark C2PA Checker","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"C2PA","item":"https://noatmark.com/c2pa/"},{"@type":"ListItem","position":3,"name":"C2PA Checker","item":"https://noatmark.com/c2pa-verifier/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I check if an image has C2PA metadata?","acceptedAnswer":{"@type":"Answer","text":"Drop the image into this checker — it scans the file's bytes locally in your browser for C2PA / Content Credentials markers and reports what it finds. For full cryptographic verification use verify.contentauthenticity.org or c2patool."}},
+{"@type":"Question","name":"Does no C2PA mean the image is human-made?","acceptedAnswer":{"@type":"Answer","text":"No. A missing manifest proves nothing — re-encoding, resizing, screenshots, and CDN optimization all strip C2PA metadata. Absence of a marker is not evidence of human authorship."}},
+{"@type":"Question","name":"Is the checker private?","acceptedAnswer":{"@type":"Answer","text":"Yes. The file is read entirely in your browser and never uploaded."}}
+]}]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>C2PA <span class="accent">Checker</span></h1>
+      <p class="lede">Drop in an image and see whether it carries C2PA / Content Credentials provenance. Free, private, in-browser — your file never leaves this page.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% local</b> — nothing uploaded</span>
+        <span class="badge">&#x1F5C2;&#xFE0F; <b>PNG · JPEG · WEBP · SVG</b></span>
+        <span class="badge">&#x2696;&#xFE0F; <b>detection</b> — not full crypto verify</span>
+      </div>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <label id="drop" class="drop">
+              <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.webp,.svg" hidden>
+              <div class="drop-inner">
+                <div class="drop-ic">&#x1F5C2;&#xFE0F;</div>
+                <b>Drop an image here</b>
+                <span>or click to browse · PNG, JPEG, WEBP, SVG</span>
+              </div>
+            </label>
+            <div class="scan-actions">
+              <button id="sampleBtn" class="btn btn-ghost">Try sample</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F9EA;</div>
+              <b>Ready to check</b>
+              <span>Drop an image on the left. We'll scan it for C2PA / Content Credentials markers right here.</span>
+            </div>
+            <div id="result" class="result hidden">
+              <div id="stats" class="stats"></div>
+              <div id="detail" class="highlighted"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>What this checker does</h2>
+      <p>It scans the file's bytes for <strong>C2PA / Content Credentials</strong> markers and tells you what it finds. This is <strong>detection, not full cryptographic verification</strong> — for a complete signature check use the official <a href="https://verify.contentauthenticity.org" rel="noopener">verify.contentauthenticity.org</a> or the <code>c2patool</code> command-line tool.</p>
+
+      <h2>Read this before you over-conclude</h2>
+      <ul>
+        <li><strong>"C2PA found" means a manifest may be present</strong> — check it officially to see the full provenance chain (who/what created it).</li>
+        <li><strong>"No C2PA found" proves nothing.</strong> Screenshots, re-encoding, resizing, and CDN optimization all strip the manifest. Absence of a marker is <em>not</em> evidence of human authorship.</li>
+        <li>Claude signs generated files (<code>.png</code>, <code>.jpg</code>, <code>.svg</code>) with C2PA metadata — read more on the <a href="/c2pa/">C2PA explainer</a>.</li>
+      </ul>
+
+      <div class="card card-accent" style="margin-top:20px">
+        <h3>Deal with the text side too</h3>
+        <p>C2PA is file-level metadata. The invisible <em>characters</em> that slip into copied text are a different problem — <a href="/zero-width-character/">scan &amp; clean them here</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/c2pa.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var input = $("fileInput");
+  var drop = $("drop");
+  var emptyState = $("emptyState");
+  var result = $("result");
+  var statsEl = $("stats");
+  var detail = $("detail");
+
+  function render(report) {
+    emptyState.classList.add("hidden");
+    result.classList.remove("hidden");
+    if (report.found) {
+      statsEl.innerHTML = '<span class="chip" style="background:var(--amber-glow);color:var(--amber);border-color:rgba(255,184,77,.25)">&#x26A0;&#xFE0F; C2PA markers detected</span> <b>' + report.fileType + '</b> &middot; ' + report.sizeBytes + ' bytes';
+      var items = report.markers.map(function (m) {
+        return '<div class="inv-item"><b>' + m.type + '</b><span>' + (m.detail || "") + '</span></div>';
+      }).join("");
+      detail.innerHTML = items + '<p class="muted" style="font-size:12px;margin-top:10px">' + report.note + '</p>';
+    } else {
+      statsEl.innerHTML = '<span class="chip" style="background:var(--mint-subtle);color:var(--mint);border-color:rgba(46,230,168,.25)">&#x2705; No C2PA markers detected</span> <b>' + report.fileType + '</b> &middot; ' + report.sizeBytes + ' bytes';
+      detail.innerHTML = '<p class="muted" style="font-size:13px">' + report.note + '</p>';
+    }
+  }
+
+  function readFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (e) { render(window.C2paVerify.verifyFile(e.target.result)); };
+    reader.readAsArrayBuffer(file);
+  }
+
+  input.addEventListener("change", function () { readFile(input.files[0]); });
+  ["dragover", "drop"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); });
+  });
+  drop.addEventListener("drop", function (e) {
+    if (e.dataTransfer.files.length) readFile(e.dataTransfer.files[0]);
+  });
+
+  $("clearBtn").addEventListener("click", function () {
+    input.value = "";
+    result.classList.add("hidden");
+    emptyState.classList.remove("hidden");
+  });
+
+  // sample: a tiny PNG with a c2pa iTXt chunk (same construction as the engine test)
+  function crc32(buf) { var c, t = []; for (var n = 0; n < 256; n++) { c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } var crc = 0xffffffff; for (var i = 0; i < buf.length; i++) crc = t[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8); return (crc ^ 0xffffffff) >>> 0; }
+  function chunk(type, data) { var tb = Array.from(type, function (c) { return c.charCodeAt(0); }); var body = tb.concat(data); var crc = crc32(Uint8Array.from(body)); var l = data.length; return [(l >>> 24) & 255, (l >>> 16) & 255, (l >>> 8) & 255, l & 255].concat(body, [(crc >>> 24) & 255, (crc >>> 16) & 255, (crc >>> 8) & 255, crc & 255]); }
+  $("sampleBtn").addEventListener("click", function () {
+    var sig = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+    var itxt = Array.from("c2pa\0\0\0en\0\0c2pa://manifest", function (c) { return c.charCodeAt(0); });
+    var png = Uint8Array.from(sig.concat(chunk("IHDR", [0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0, 0, 0]), chunk("iTXt", itxt), chunk("IEND", [])));
+    render(window.C2paVerify.verifyFile(png.buffer));
+  });
+})();
+</script>
+</body>
+</html>

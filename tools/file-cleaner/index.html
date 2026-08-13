@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulk File Cleaner — Clean Invisible Characters from Multiple Files at Once | NoAtMark</title>
+<meta name="description" content="Drop multiple files (TXT, MD, HTML, CSV, JSON, RTF, DOCX) and clean invisible characters from all of them at once, then download as a zip. Scan first, private, in-browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/tools/file-cleaner/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"Bulk File Cleaner","url":"https://noatmark.com/tools/file-cleaner/"},
+{"@type":"WebApplication","name":"NoAtMark Bulk File Cleaner","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://noatmark.com/tools/"},{"@type":"ListItem","position":3,"name":"File Cleaner","item":"https://noatmark.com/tools/file-cleaner/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>Bulk file <span class="accent">cleaner</span></h1>
+      <p class="lede">Drop <strong>multiple files</strong> at once — we scan them all and show you exactly what invisible characters and formatting junk each one contains. Then clean them all and download a zip.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — files never leave your device</span>
+        <span class="badge">&#x1F4E6; <b>bulk</b> — TXT · MD · HTML · CSV · JSON · RTF · DOCX</span>
+        <span class="badge">&#x1F50D; <b>scan first</b> — clean only when you say so</span>
+      </div>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <label id="drop" class="drop">
+              <input type="file" id="fileInput" multiple accept=".txt,.md,.markdown,.html,.htm,.csv,.json,.rtf,.docx" hidden>
+              <div class="drop-inner">
+                <div class="drop-ic">&#x1F4C2;</div>
+                <b>Drop files here</b>
+                <span>or click to browse · multiple files · TXT, MD, HTML, CSV, JSON, RTF, DOCX</span>
+              </div>
+            </label>
+            <div class="options" style="margin-top:10px">
+              <label class="opt"><input type="checkbox" id="optPlain"> For HTML: also extract plain text</label>
+            </div>
+            <div class="scan-actions">
+              <button id="cleanBtn" class="btn btn-primary" disabled>&#x1F9F9; Clean all files</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F50D;</div>
+              <b>Drop files to scan them</b>
+              <span>We'll report what's inside each file — invisible characters and formatting junk — before touching anything.</span>
+            </div>
+            <div id="scanResult" class="result hidden">
+              <div id="scanStats" class="stats"></div>
+              <div id="fileTableWrap" class="file-table-wrap"></div>
+            </div>
+            <div id="cleanResult" class="result hidden">
+              <div id="cleanStats" class="stats"></div>
+              <div class="scan-actions">
+                <button id="downloadBtn" class="btn btn-primary btn-sm">&#x2B07;&#xFE0F; Download cleaned files (zip)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Scan.</strong> Drop one or many files and we report exactly what pollution each carries — invisible characters by type, plus formatting junk.</li>
+        <li><strong>Decide.</strong> Review the findings. Nothing is changed yet.</li>
+        <li><strong>Clean &amp; download.</strong> Click "Clean all files" — we strip the pollution from every file and hand you a zip of the cleaned results.</li>
+      </ol>
+      <h2>What it cleans</h2>
+      <ul>
+        <li>Invisible characters — zero-width spaces, joiners, BOMs, soft hyphens, variation selectors.</li>
+        <li>Formatting junk (TXT/MD/HTML) — stray code fences, excess blank lines, over-deep headings, trailing spaces.</li>
+        <li>CSV/JSON structure is preserved — only invisible characters are stripped.</li>
+      </ul>
+      <h2>Honest limits</h2>
+      <ul>
+        <li>PDF direct cleaning isn't supported yet — use the <a href="/tools/plain-text-extractor/">plain text extractor</a>.</li>
+        <li>DOCX output preserves content; open the result in Word to confirm.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="/js/engines/scan.js"></script>
+<script src="/js/engines/clean.js"></script>
+<script src="/js/engines/plaintext.js"></script>
+<script src="/js/engines/file-cleaner.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var fc = window.NoAtMarkFileCleaner, T = window.NoAtMarkTool;
+  var drop = $("drop"), input = $("fileInput");
+  var emptyState = $("emptyState"), scanResult = $("scanResult"), cleanResult = $("cleanResult");
+  var scanStats = $("scanStats"), tableWrap = $("fileTableWrap");
+  var cleanStats = $("cleanStats");
+  var cleanBtn = $("cleanBtn"), downloadBtn = $("downloadBtn");
+  var files = [];
+  var lastZipBlob = null, lastZipName = "noatmark-cleaned.zip";
+
+  function fmtIssues(f) {
+    if (!f) return '<span class="dim">—</span>';
+    var parts = [];
+    if (f.blankLines) parts.push(f.blankLines + " blank lines");
+    if (f.trailingSpaces) parts.push(f.trailingSpaces + " trailing");
+    if (f.headings) parts.push(f.headings + " headings");
+    if (f.fences) parts.push("fences");
+    return parts.length ? '<span class="warn">' + T.esc(parts.join(", ")) + '</span>' : '<span class="dim">clean</span>';
+  }
+
+  function renderTable(results) {
+    var rows = results.map(function (r, i) {
+      var dirtyBadge = r.dirty
+        ? '<span class="bad" style="font-size:11px">dirty</span>'
+        : '<span class="pos" style="font-size:11px">clean</span>';
+      var invis = r.hidden.total
+        ? '<span class="bad">' + r.hidden.total + '</span>'
+        : '<span class="dim">0</span>';
+      return '<tr>' +
+        '<td class="url">' + T.esc(files[i].name) + '</td>' +
+        '<td class="dim">' + T.esc(r.format) + '</td>' +
+        '<td>' + invis + '</td>' +
+        '<td>' + fmtIssues(r.formatting) + '</td>' +
+        '<td>' + dirtyBadge + '</td>' +
+      '</tr>';
+    }).join("");
+    var totalInvis = results.reduce(function (s, r) { return s + r.hidden.total; }, 0);
+    var dirtyCount = results.filter(function (r) { return r.dirty; }).length;
+    tableWrap.innerHTML =
+      '<table class="ztable"><tr><th>File</th><th>Format</th><th>Invisible</th><th>Formatting</th><th>Status</th></tr>' + rows + '</table>';
+    cleanBtn.disabled = dirtyCount === 0;
+    scanStats.innerHTML =
+      '<b>' + results.length + '</b> file(s) &middot; <b style="color:var(--amber)">' + totalInvis + '</b> invisible char(s) total &middot; ' +
+      (dirtyCount ? '<span class="bad">' + dirtyCount + ' need cleaning</span>' : '<span class="pos">all clean</span>');
+  }
+
+  function handleFiles(list) {
+    files = Array.from(list || []).filter(function (f) { return f && f.name; });
+    if (!files.length) return;
+    cleanResult.classList.add("hidden");
+    emptyState.classList.add("hidden");
+    scanResult.classList.remove("hidden");
+    cleanBtn.disabled = true;
+    scanStats.textContent = "Scanning " + files.length + " file(s)…";
+    tableWrap.innerHTML = "";
+    Promise.all(files.map(function (f) { return fc.scanFile(f); })).then(function (results) {
+      renderTable(results);
+    }).catch(function (e) {
+      scanStats.innerHTML = '<span class="bad">&#x2717; scan failed</span> ' + T.esc(String(e && e.message || e));
+    });
+  }
+
+  input.addEventListener("change", function () { handleFiles(input.files); });
+  ["dragover", "drop"].forEach(function (ev) {
+    drop.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); });
+  });
+  drop.addEventListener("drop", function (e) {
+    if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+  });
+
+  $("clearBtn").addEventListener("click", function () {
+    input.value = ""; files = []; lastZipBlob = null;
+    scanResult.classList.add("hidden"); cleanResult.classList.add("hidden");
+    emptyState.classList.remove("hidden"); cleanBtn.disabled = true;
+  });
+
+  cleanBtn.addEventListener("click", function () {
+    if (!files.length) return;
+    cleanBtn.disabled = true;
+    cleanStats.textContent = "Cleaning " + files.length + " file(s)…";
+    var opts = { plainText: $("optPlain").checked };
+    Promise.all(files.map(function (f) { return fc.cleanFile(f, opts); })).then(function (results) {
+      var zip = new JSZip();
+      var totalRemoved = 0;
+      results.forEach(function (r) {
+        if (r.blob) zip.file(r.downloadName, r.blob);
+        else zip.file(r.downloadName, r.text);
+        if (r.summary && r.summary.invisibleRemoved) totalRemoved += r.summary.invisibleRemoved;
+      });
+      return zip.generateAsync({ type: "blob" }).then(function (blob) {
+        lastZipBlob = blob;
+        lastZipName = "noatmark-cleaned-" + results.length + "-files.zip";
+        scanResult.classList.add("hidden");
+        cleanResult.classList.remove("hidden");
+        cleanStats.innerHTML =
+          '<span class="chip" style="background:var(--mint-subtle);color:var(--mint)">&#x2705; cleaned ' + results.length + ' file(s)</span> ' +
+          (totalRemoved ? '<b>' + totalRemoved + '</b> invisible character(s) removed' : 'nothing to remove') +
+          ' &rarr; download below';
+      });
+    }).catch(function (e) {
+      cleanStats.innerHTML = '<span class="bad">&#x2717; failed</span> ' + T.esc(String(e && e.message || e));
+      cleanBtn.disabled = false;
+    });
+  });
+
+  downloadBtn.addEventListener("click", function () {
+    if (!lastZipBlob) return;
+    var url = URL.createObjectURL(lastZipBlob);
+    var a = document.createElement("a");
+    a.href = url; a.download = lastZipName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    T.flash(downloadBtn, "Downloading zip!");
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plain Text Extractor — Convert HTML &amp; Rich Text to Plain Text | NoAtMark</title>
+<meta name="description" content="Paste rich text or HTML and instantly get clean, plain text — tags, styling, and entities stripped. Free, private, in-browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/tools/plain-text-extractor/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"Plain Text Extractor","url":"https://noatmark.com/tools/plain-text-extractor/"},
+{"@type":"WebApplication","name":"NoAtMark Plain Text Extractor","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://noatmark.com/tools/"},{"@type":"ListItem","position":3,"name":"Plain Text Extractor","item":"https://noatmark.com/tools/plain-text-extractor/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>Plain text <span class="accent">extractor</span></h1>
+      <p class="lede">Paste rich text or HTML and get clean, plain text — tags, inline styles, and entities all stripped. Perfect for CMS fields, emails, and editors that hate markup.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — in-browser</span>
+        <span class="badge">&#x1F4CE; <b>HTML → plain</b></span>
+      </div>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false" placeholder="Paste rich text, HTML, or a copied web page selection here…"></textarea>
+            <div class="scan-actions">
+              <button id="runBtn" class="btn btn-primary">&#x1F4CE; Extract plain text</button>
+              <button id="sampleBtn" class="btn btn-ghost">Try a Sample</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F4CE;</div>
+              <b>Ready to extract</b>
+              <span>Paste HTML or rich text on the left. Clean plain text appears here, tags and styling gone.</span>
+            </div>
+            <div id="result" class="result hidden">
+              <div id="stats" class="stats"></div>
+              <textarea id="outText" class="input" readonly></textarea>
+              <div class="scan-actions">
+                <button id="copyBtn" class="btn btn-primary btn-sm">&#x1F4CB; Copy plain text</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>What it strips</h2>
+      <ul>
+        <li>HTML tags (<code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, inline styles, classes).</li>
+        <li><code>&lt;script&gt;</code>, <code>&lt;style&gt;</code>, and comments (invisible to readers anyway).</li>
+        <li>HTML entities (<code>&amp;amp;</code> → <code>&amp;</code>, <code>&amp;nbsp;</code>, numeric codes).</li>
+        <li>Excess blank lines and indentation.</li>
+      </ul>
+      <h2>Honest limits</h2>
+      <ul>
+        <li>It's a formatting tool — it can't reconstruct meaning lost in the original HTML, and tables flatten to line-separated text.</li>
+        <li>For pasted text with <em>invisible characters</em>, pair with the <a href="/zero-width-character/">zero-width remover</a>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/engines/plaintext.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var pl = window.NoAtMarkPlain, T = window.NoAtMarkTool;
+  var emptyState = $("emptyState"), result = $("result");
+  var SAMPLE = '<div style="color:red"><h2>Title</h2><p>Hello <b>world</b> &amp; friends.</p><ul><li>One</li><li>Two</li></ul></div>';
+
+  $("runBtn").addEventListener("click", function () {
+    var inp = $("input").value;
+    var out = pl.htmlToText(inp);
+    emptyState.classList.add("hidden");
+    result.classList.remove("hidden");
+    $("outText").value = out;
+    $("stats").innerHTML = '<span class="chip" style="background:var(--mint-subtle);color:var(--mint)">&#x2705; extracted</span> ' + inp.length + ' chars &rarr; ' + out.length + ' chars plain text';
+  });
+
+  $("sampleBtn").addEventListener("click", function () { $("input").value = SAMPLE; });
+  $("clearBtn").addEventListener("click", function () {
+    $("input").value = ""; $("outText").value = "";
+    result.classList.add("hidden"); emptyState.classList.remove("hidden");
+  });
+  $("copyBtn").addEventListener("click", function () {
+    T.copyText($("outText").value).then(function (ok) { T.flash($("copyBtn"), ok ? "Copied!" : "Copy failed"); });
+  });
+})();
+</script>
+</body>
+</html>

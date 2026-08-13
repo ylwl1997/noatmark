@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero Width Joiner (U+200D) — Invisible Emoji Glue &amp; Tracking Mark | NoAtMark</title>
+<meta name="description" content="The zero width joiner (U+200D) is an invisible character that joins emoji and scripts — and shows up in copied AI text. What it is and how to remove it.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/characters/zero-width-joiner/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"TechArticle","headline":"Zero Width Joiner (U+200D): The Invisible Emoji Glue & Tracking Mark","description":"What the zero width joiner is, why it appears in copied AI text and emoji, and how to remove it.","author":{"@type":"Organization","name":"NoAtMark"},"publisher":{"@type":"Organization","name":"NoAtMark"},"datePublished":"2026-08-13","mainEntityOfPage":"https://noatmark.com/characters/zero-width-joiner/"},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is a zero width joiner?","acceptedAnswer":{"@type":"Answer","text":"A zero width joiner (U+200D) is an invisible character that joins two characters into a combined sequence, like a family emoji. It can also appear in copied AI text and act as an invisible tracking mark."}},
+{"@type":"Question","name":"Why do I see ZWJ in copied text?","acceptedAnswer":{"@type":"Answer","text":"AI output and copied web content can carry zero width joiners used for emoji composition or layout. They're invisible but count as characters."}},
+{"@type":"Question","name":"How do I remove zero width joiners?","acceptedAnswer":{"@type":"Answer","text":"Paste the text into the scanner or the file cleaner. It finds every U+200D and strips it on your command."}}
+]},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Characters","item":"https://noatmark.com/characters/"},{"@type":"ListItem","position":3,"name":"Zero Width Joiner","item":"https://noatmark.com/characters/zero-width-joiner/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Invisible character reference · U+200D</p>
+      <h1>Zero Width Joiner <span class="accent">(U+200D)</span></h1>
+      <p class="lede">The invisible "glue" that joins emoji and scripts — and a character that shows up unexpectedly in copied AI text, sometimes as an invisible tracking mark. Here's the guide and remover.</p>
+      <p class="muted small">By NoAtMark &middot; Published Aug 13, 2026</p>
+    </section>
+
+    <section class="info wrap">
+      <h2>The short version</h2>
+      <table class="ztable">
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Name</td><td>Zero Width Joiner (ZWJ)</td></tr>
+        <tr><td>Code point</td><td><code>U+200D</code></td></tr>
+        <tr><td>UTF-8 bytes</td><td><code>E2 80 8D</code></td></tr>
+        <tr><td>Appearance</td><td>Invisible</td></tr>
+        <tr><td>Purpose</td><td>Joins characters (emoji sequences, complex scripts)</td></tr>
+        <tr><td>Danger</td><td>Breaks matching; can act as an invisible tracker</td></tr>
+      </table>
+
+      <h2>Why it breaks things</h2>
+      <ul>
+        <li><strong>Emoji sequences.</strong> A family or skin-tone emoji is built from multiple characters joined by ZWJ. Copy that text and the invisible joiners come with it.</li>
+        <li><strong>Copied AI output.</strong> Zero width joiners can appear in text copied from AI assistants and web pages, even when you don't see any emoji.</li>
+        <li><strong>Tracking marks.</strong> ZWJ is one of the characters used to build invisible fingerprints in text — a way to mark copies or trace leaks.</li>
+        <li><strong>Data &amp; code.</strong> Like other invisible characters, an unexpected ZWJ breaks string equality and validation.</li>
+      </ul>
+
+      <h2>Remove it in one click</h2>
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false" placeholder="Paste text that may contain zero width joiners here…"></textarea>
+            <div class="scan-actions">
+              <button id="scanBtn" class="btn btn-primary">&#x1F50D; Scan</button>
+              <button id="cleanBtn" class="btn btn-ghost">Clean &amp; copy</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="result" class="highlighted" style="min-height:150px">Paste text on the left, then hit Scan to see every U+200D ZWJ.</div>
+          </div>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:10px">Note: removing a ZWJ can change how a joined emoji renders — that's expected and harmless. For files, use the <a href="/tools/file-cleaner/">file cleaner</a>.</p>
+
+      <h2>Frequently asked questions</h2>
+      <details><summary>Will removing ZWJ break emoji?</summary><p>It can change how <em>joined</em> emoji (like a family) render — they may split into individual emoji. That's the intended trade-off when you want clean text.</p></details>
+      <details><summary>Is ZWJ a tracking mark?</summary><p>It's one of the characters used in invisible fingerprinting. If a scan finds ZWJ where you don't expect emoji, it may be a tracker.</p></details>
+      <details><summary>How do I see ZWJ?</summary><p>It's invisible. A scanner reports it by code point and position.</p></details>
+
+      <h2>References &amp; further reading</h2>
+      <ul class="search-terms">
+        <li>Unicode Standard (ZWJ) — <a href="https://www.unicode.org/versions/latest/" target="_blank" rel="noopener">unicode.org</a></li>
+        <li>Invisible characters &amp; tracking — <a href="/blog/ai-output-copy-paste-hygiene/">noatmark.com/blog/ai-output-copy-paste-hygiene</a></li>
+        <li>Invisible character remover — <a href="/zero-width-character/">noatmark.com/zero-width-character</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/engines/scan.js"></script>
+<script src="/js/tool-common.js"></script>
+<script>
+(function () {
+  "use strict";
+  var sc = window.NoAtMarkScan, T = window.NoAtMarkTool;
+  var input = document.getElementById("input"), result = document.getElementById("result");
+  function doScan() {
+    var h = sc.scanHidden(input.value);
+    var zwj = h.matches.filter(function (m) { return m.cp === 0x200D; }).length;
+    result.innerHTML = zwj === 0
+      ? '<span class="empty-note">&#x2705; No U+200D ZWJ found.</span>'
+      : '<span class="chip" style="background:var(--amber-glow);color:var(--amber)">&#x26A0;&#xFE0F; ' + zwj + ' U+200D ZWJ found</span>' + (h.total > zwj ? ' + ' + (h.total - zwj) + ' other invisible' : '') + '<br><br>' + h.matches.slice(0, 20).map(function (m) { return 'U+' + m.cp.toString(16).toUpperCase().padStart(4, '0') + ' @' + m.index; }).join('<br>');
+  }
+  document.getElementById("scanBtn").addEventListener("click", doScan);
+  document.getElementById("cleanBtn").addEventListener("click", function () {
+    T.copyText(sc.stripInvisible(input.value)).then(function (ok) { T.flash(document.getElementById("cleanBtn"), ok ? "Copied clean text!" : "Copy failed"); });
+  });
+})();
+</script>
+</body>
+</html>

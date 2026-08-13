@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark — Invisible Character Scanner &amp; Text Hygiene for AI</title>
+<meta name="description" content="Scan and remove invisible Unicode characters (zero-width spaces, BOMs), sanitize untrusted text before it reaches an LLM, and clean AI output before publishing. Free, private, in-browser.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://noatmark.com/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NoAtMark">
+<meta property="og:title" content="NoAtMark — Invisible Character Scanner &amp; Text Hygiene for AI">
+<meta property="og:description" content="Find and remove hidden Unicode characters, sanitize untrusted text, and clean AI output. Free, private, in-browser.">
+<meta property="og:url" content="https://noatmark.com/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","name":"NoAtMark Invisible Character Scanner","url":"https://noatmark.com/","applicationCategory":"UtilityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Scans pasted text for hidden Unicode characters (zero-width spaces, joiners, BOMs, variation selectors) and cleans them."},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What are zero-width characters?","acceptedAnswer":{"@type":"Answer","text":"Zero-width characters are Unicode characters that take up no visible space, such as the zero-width space (U+200B), zero-width joiner (U+200D) and zero-width non-joiner (U+200C). They are invisible in normal text but still occupy bytes and can break validation, searching, and formatting."}},
+{"@type":"Question","name":"Why does my AI-generated text contain invisible characters?","acceptedAnswer":{"@type":"Answer","text":"AI models, editors, and copy-paste from web pages can silently insert zero-width characters, BOMs, variation selectors, and soft hyphens. These artifacts are invisible but can cause form validation errors, unexpected line breaks, and problems when pasting into editors, databases, or code."}},
+{"@type":"Question","name":"Does NoAtMark remove AI watermarks?","acceptedAnswer":{"@type":"Answer","text":"No, and no tool can today. Claude's text watermark is a statistical signal in word choice — not a visible character — and C2PA lives in file metadata. NoAtMark cleans invisible Unicode characters; it doesn't claim to strip statistical watermarks or provenance."}},
+{"@type":"Question","name":"Is the scanner private?","acceptedAnswer":{"@type":"Answer","text":"Yes. Everything runs locally in your browser. Your text is never uploaded to a server."}}
+]}]}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <div class="banner"><div class="wrap">&#x2728; Sanitize untrusted text before it hits your LLM — <a href="/api/">try the API &rarr;</a></div></div>
+
+  <main>
+    <!-- HERO: tool embedded -->
+    <section class="hero wrap" id="scanner">
+      <p class="eyebrow">Text hygiene for the AI age</p>
+      <h1>Clean text, <span class="accent">everywhere AI touches it.</span></h1>
+      <p class="lede">Paste any text — AI output, untrusted input, or a web copy — and instantly find every hidden Unicode and zero-width character. Then clean it, or run the same engine in your own pipeline.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — in-browser</span>
+        <span class="badge">&#x2705; <b>Free forever</b> — no sign-up</span>
+        <span class="badge">&#x1F6E1;&#xFE0F; <b>Sanitize</b> before it hits an LLM</span>
+      </div>
+
+      <div class="scanner">
+        <div class="scan-grid">
+          <div class="scan-left">
+            <textarea id="input" class="input" spellcheck="false"
+              placeholder="Paste text here — e.g. copy something from ChatGPT, Claude, or any web page that might hide zero-width characters…"></textarea>
+            <div class="scan-meta">
+              <span id="charCount" class="charcount">0 chars</span>
+            </div>
+            <div class="scan-actions">
+              <button id="scanBtn" class="btn btn-primary">&#x1F50D; Scan</button>
+              <button id="sampleBtn" class="btn btn-ghost">Try a Sample</button>
+              <button id="clearBtn" class="btn btn-ghost">Clear</button>
+            </div>
+          </div>
+          <div class="scan-right">
+            <div id="emptyState" class="empty-state">
+              <div class="es-icon">&#x1F50D;</div>
+              <b>Ready to scan</b>
+              <span>Paste text on the left, then hit Scan. Every invisible &amp; zero-width character will be highlighted right here.</span>
+            </div>
+            <div id="result" class="result hidden">
+              <div class="result-head">
+                <div id="stats" class="stats"></div>
+                <div class="result-actions">
+                  <button id="cleanBtn" class="btn btn-primary btn-sm">&#x1F9F9; Clean &amp; copy</button>
+                  <button id="copyCleanBtn" class="btn btn-ghost btn-sm" disabled>Copy cleaned</button>
+                </div>
+              </div>
+              <div class="options">
+                <label class="opt"><input type="checkbox" id="optKeepBom"> Keep BOM (U+FEFF)</label>
+                <label class="opt"><input type="checkbox" id="optKeepSpecial"> Keep special spaces</label>
+                <label class="opt"><input type="checkbox" id="optKeepCtrl"> Keep control chars</label>
+              </div>
+              <div id="highlighted" class="highlighted" dir="ltr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust">
+        <div class="trust-item"><span class="ic">&#x1F510;</span><div><b>Private by design</b><span>Text never leaves your browser.</span></div></div>
+        <div class="trust-item"><span class="ic">&#x26A1;</span><div><b>Instant</b><span>Scan on every keystroke.</span></div></div>
+        <div class="trust-item"><span class="ic">&#x1F9F9;</span><div><b>One-click clean</b><span>Strip all hidden chars &amp; copy.</span></div></div>
+        <div class="trust-item"><span class="ic">&#x1F6E1;&#xFE0F;</span><div><b>Zero upload</b><span>No account, no tracking.</span></div></div>
+      </div>
+    </section>
+
+    <!-- THREE PERSONAS -->
+    <section class="info wrap">
+      <h2>Built for <span class="accent">three workflows</span></h2>
+      <div class="grid3">
+        <a class="card card-link" href="/api/">
+          <span class="cat">Developers</span>
+          <h3>Sanitize input before it hits your LLM</h3>
+          <p>Strip injection attempts and invisible characters from untrusted text — via API, MCP, or SDK. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link card-accent" href="/tools/pre-publish-inspector/">
+          <span class="cat">Creators</span>
+          <h3>Publish clean, AI-visible content</h3>
+          <p>Check the GEO score and clean hidden text before you publish — WordPress, Ghost, or anywhere. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/">
+          <span class="cat">Students &amp; teachers</span>
+          <h3>Clean AI output before you submit</h3>
+          <p>Remove invisible characters and formatting junk from AI-assisted work. <span class="arr">&rarr;</span></p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ALL TOOLS -->
+    <section class="info wrap">
+      <h2>All <span class="accent">tools</span></h2>
+      <div class="grid3">
+        <a class="card card-link" href="/zero-width-character/">
+          <span class="cat">Clean · text</span>
+          <h3>Invisible character remover</h3>
+          <p>Strip zero-width trackers &amp; hidden marks from pasted text. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/file-cleaner/">
+          <span class="cat">Clean · files</span>
+          <h3>File cleaner</h3>
+          <p>Scan then clean invisible characters in TXT, HTML, DOCX &amp; more. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/llm-formatter/">
+          <span class="cat">Clean · formatting</span>
+          <h3>LLM text formatter</h3>
+          <p>Remove stray fences, blank lines &amp; heading noise from AI output. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/plain-text-extractor/">
+          <span class="cat">Convert</span>
+          <h3>Plain text extractor</h3>
+          <p>HTML or rich text &rarr; clean plain text. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/prompt-injection-scanner/">
+          <span class="cat">Scan · security</span>
+          <h3>Prompt injection scanner</h3>
+          <p>Detect hidden text &amp; injection patterns before pasting into an AI. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/tools/invisible-watermark/">
+          <span class="cat">Watermark</span>
+          <h3>Invisible watermark</h3>
+          <p>Add or verify a hidden, keyed watermark in your text. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/c2pa-verifier/">
+          <span class="cat">Scan · provenance</span>
+          <h3>C2PA Checker</h3>
+          <p>See whether an image carries Content Credentials. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link card-accent" href="/tools/pre-publish-inspector/">
+          <span class="cat">&#x2B50; Flagship</span>
+          <h3>Pre-Publish Inspector</h3>
+          <p>Article health &amp; GEO score before you publish. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/api/">
+          <span class="cat">Developers</span>
+          <h3>Text hygiene API</h3>
+          <p>The same engines as a JSON API for your own pipelines. <span class="arr">&rarr;</span></p>
+        </a>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-sec wrap">
+      <h2>Clean text in <span class="accent">three simple steps</span></h2>
+      <div class="grid3">
+        <div class="card step-card"><span class="step-n">1</span><h3>Paste</h3><p>Drop in AI output, a web copy, or a document — plain text only, nothing leaves your browser.</p></div>
+        <div class="card step-card"><span class="step-n">2</span><h3>Scan</h3><p>NoAtMark highlights every invisible &amp; zero-width character and names each one (U+200B, ZWJ, BOM…).</p></div>
+        <div class="card step-card"><span class="step-n">3</span><h3>Clean</h3><p>One click strips the hidden artifacts and copies clean text — ready for editors, forms, code, or CMS.</p></div>
+      </div>
+    </section>
+
+    <!-- WHAT WE ARE / AREN'T -->
+    <section class="boundary wrap">
+      <h2>What NoAtMark is — and isn't</h2>
+      <div class="grid2">
+        <div class="card card-ok">
+          <h3>&#x2713; It cleans invisible <em>characters</em></h3>
+          <p>Zero-width spaces (U+200B), joiners, BOMs, direction marks, variation selectors — the hidden Unicode bytes that break validation, matching, and layout.</p>
+        </div>
+        <div class="card card-no">
+          <h3>&#x2717; It can't remove AI <em>watermarks</em></h3>
+          <p>Claude's text watermark is a statistical signal in word choice, not a character. C2PA lives in file metadata. Neither is something this tool — or any tool — strips today. <a href="/claude-watermark/">Why &rarr;</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="info wrap">
+      <h2>Simple, <span class="accent">transparent pricing</span></h2>
+      <p class="lede-sub">Every tool is free. Upgrade to go ad-free forever and unlock the pipeline.</p>
+      <div class="grid2">
+        <div class="card">
+          <h3>Free</h3>
+          <p class="price">$0 <span>forever</span></p>
+          <ul class="feat">
+            <li>&#x2713; All web tools</li>
+            <li>&#x2713; In-browser, no account</li>
+            <li>&#x2713; Limited API</li>
+            <li>&#x2717; Ads shown</li>
+          </ul>
+        </div>
+        <div class="card card-ok">
+          <h3>Creator</h3>
+          <p class="price">$9 <span>/mo</span></p>
+          <ul class="feat">
+            <li>&#x2713; Ad-free forever</li>
+            <li>&#x2713; WP plugin + Ghost + extension</li>
+            <li>&#x2713; Batch cleaning + GEO score</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>API Pro</h3>
+          <p class="price">$29 <span>/mo</span></p>
+          <ul class="feat">
+            <li>&#x2713; Ad-free forever</li>
+            <li>&#x2713; Sanitize / scan / clean API</li>
+            <li>&#x2713; MCP + SDKs</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Team</h3>
+          <p class="price">$149 <span>/mo</span></p>
+          <ul class="feat">
+            <li>&#x2713; Ad-free forever</li>
+            <li>&#x2713; Multi-seat + batch audit</li>
+            <li>&#x2713; Compliance report</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:18px"><a class="btn btn-ghost" href="/pricing/">See full pricing &rarr;</a></p>
+    </section>
+
+    <!-- LEARN -->
+    <section class="learn wrap">
+      <h2>Understand the <span class="accent">AI watermark era</span></h2>
+      <div class="grid3">
+        <a class="card card-link" href="/claude-watermark/"><h3>Claude's text watermark</h3><p>What it is — and what can &amp; can't be removed. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/zero-width-character/"><h3>Zero-width characters</h3><p>U+200B, ZWJ, BOM — the invisible bytes. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/c2pa/"><h3>C2PA &amp; Content Credentials</h3><p>The signed-provenance standard, explained. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/c2pa-verifier/"><h3>C2PA Checker</h3><p>Verify provenance in your images. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/glossary/"><h3>AI watermark glossary</h3><p>Every term in one place. <span class="arr">&rarr;</span></p></a>
+      </div>
+      <p style="margin-top:16px"><a class="btn btn-ghost" href="/news/">All news &amp; guides &rarr;</a></p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq wrap">
+      <h2>Frequently Asked Questions</h2>
+      <details><summary>What are zero-width characters?</summary><p>Zero-width characters are Unicode code points that occupy no visible space, like the zero-width space (<code>U+200B</code>), zero-width joiner (<code>U+200D</code>), and zero-width non-joiner (<code>U+200C</code>). They're invisible on screen but still count as characters, breaking validation, searching, and layout.</p></details>
+      <details><summary>Why does AI-generated text have hidden characters?</summary><p>AI models, text editors, and copy-paste from web pages can silently insert zero-width characters, BOMs, soft hyphens, and variation selectors. The output looks fine but carries invisible artifacts.</p></details>
+      <details><summary>Does NoAtMark remove Claude's watermark?</summary><p>No, and no tool honestly can today. Anthropic's text watermark is a statistical signal in word choice, not a visible character; C2PA lives in file metadata. NoAtMark removes invisible <em>Unicode characters</em> — it doesn't claim to strip statistical watermarks.</p></details>
+      <details><summary>Is NoAtMark free?</summary><p>The scanner and every web tool are free forever — no sign-up, no uploads, no limits. Paid plans go ad-free and unlock the API, plugins, and team features.</p></details>
+      <details><summary>Can I clean invisible characters in bulk?</summary><p>Yes — the <a href="/wordpress-plugin/">WordPress plugin</a>, <a href="/ghost/">Ghost script</a>, and <a href="/api/">REST API</a> all clean an entire site's content before publishing.</p></details>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+<script src="/js/scanner.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

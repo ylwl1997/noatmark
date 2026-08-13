@@ -1,0 +1,13 @@
+{
+  "name": "noatmark-ghost",
+  "version": "0.1.0",
+  "description": "Bulk-clean invisible characters from Ghost posts via the Admin API. Zero dependencies. Companion to noatmark.com.",
+  "type": "module",
+  "bin": { "noatmark-ghost": "clean.js" },
+  "main": "clean.js",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "keywords": ["ghost", "text hygiene", "invisible characters", "clean", "cms", "unicode"],
+  "repository": { "type": "git", "url": "https://github.com/ylwl1997/noatmark-text-hygiene" },
+  "homepage": "https://noatmark.com/ghost/"
+}

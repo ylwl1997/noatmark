@@ -1,0 +1,18 @@
+{
+  "name": "noatmark-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for text hygiene: sanitize text before feeding it to an LLM (strip invisible characters, flag prompt injection), scan for hidden text, and clean LLM formatting. Companion to noatmark.com.",
+  "type": "module",
+  "bin": { "noatmark-mcp": "index.js" },
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": ["mcp", "text hygiene", "sanitize", "prompt injection", "invisible characters", "llm", "clean text"],
+  "files": ["index.js", "lib/"],
+  "repository": { "type": "git", "url": "https://github.com/ylwl1997/noatmark-text-hygiene" },
+  "homepage": "https://noatmark.com/mcp/",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  }
+}

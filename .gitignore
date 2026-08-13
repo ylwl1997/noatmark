@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+
+# 非网站内容（开发产物/独立包/SVN 树，不部署）
+research/
+pypkg/
+npm/
+wordpress-org/
+.wp-staging/

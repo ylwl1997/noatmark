@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Watermark Glossary — Zero-Width, C2PA, Statistical Watermarks | NoAtMark</title>
+<meta name="description" content="A plain-English glossary of AI content-marking terms: embedded text watermarks, C2PA provenance, EU AI Act Article 50, zero-width characters, machine-readable marking, AI humanizers, and more.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/glossary/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"AI Watermark Glossary","url":"https://noatmark.com/glossary/"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"Glossary","item":"https://noatmark.com/glossary/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <h1>AI Watermark &amp; Content-Marking <span class="accent">Glossary</span></h1>
+      <p class="lede">Plain-English definitions of the terms around invisible watermarks, C2PA provenance, and the EU's AI transparency rules. Every term in one place.</p>
+    </section>
+
+    <section class="info wrap">
+      <h2 id="core">1. Core technical terms</h2>
+      <dl class="gloss">
+        <dt>Embedded Text Watermark</dt>
+        <dd>An invisible mark woven into the generated text itself at the model level, rather than attached as file metadata. It lives in the words, so it survives copy-and-paste. <a href="/claude-watermark/">More &rarr;</a></dd>
+        <dt>Imperceptible / Invisible Watermark</dt>
+        <dd>A watermark that is completely invisible to the eye, does not change the meaning or readability of text, but can be detected by a specific algorithm.</dd>
+        <dt>Machine-Readable Marking</dt>
+        <dd>The legal term used in EU AI Act Article 50 — a mark designed to be identified by machines and detection systems, not necessarily by humans.</dd>
+        <dt>Statistical Bias Watermarking</dt>
+        <dd>A method that introduces a tiny probability bias when the model predicts the next token, so generated word combinations carry a detectable statistical fingerprint.</dd>
+        <dt>Signed Provenance Metadata</dt>
+        <dd>Cryptographically signed attribution data attached to files such as images and SVGs, used to verify where a file came from and whether it was tampered with.</dd>
+        <dt>C2PA Standard</dt>
+        <dd>The open provenance standard from the Coalition for Content Provenance and Authenticity. Anthropic's file signing is built on C2PA (Content Credentials). <a href="/c2pa/">More &rarr;</a></dd>
+      </dl>
+
+      <h2 id="regulatory">2. Regulatory &amp; compliance terms</h2>
+      <dl class="gloss">
+        <dt>EU AI Act Article 50</dt>
+        <dd>The EU law provision requiring generative-AI providers to mark AI-generated content in a machine-readable way. The direct trigger for Claude's watermarking.</dd>
+        <dt>Code of Practice on Transparency</dt>
+        <dd>A voluntary framework that AI providers sign to demonstrate compliance with Article 50, published June 2026 with roughly 190 signatories.</dd>
+        <dt>AI Provenance / Content Authenticity</dt>
+        <dd>The end-to-end system for tracking whether content was created by a human or by a specific AI model.</dd>
+        <dt>Model-Level Enforcement</dt>
+        <dd>Watermarking applied inside the model's output layer, so it cannot be bypassed by a paid tier, a settings toggle, or an API flag.</dd>
+      </dl>
+
+      <h2 id="anti">3. Anti-watermarking &amp; tool terms</h2>
+      <dl class="gloss">
+        <dt>Watermark Persistence / Resistance</dt>
+        <dd>How well a text watermark survives copy-paste and light editing. Because the mark is in the words, it may persist through some edits.</dd>
+        <dt>Text Sanitization / De-marking</dt>
+        <dd>Cleaning hidden Unicode, zero-width characters, and formatting artifacts out of text. That's exactly what the NoAtMark scanner does — it removes invisible <em>characters</em>, not statistical signals. <a href="/zero-width-character/">More &rarr;</a></dd>
+        <dt>AI Humanizer / Paraphraser</dt>
+        <dd>A rewriting tool that changes word choice and sentence structure to make AI text read more naturally. NoAtMark's Humanize focuses on better writing with tone control — not on evading detectors. <a href="/humanizer/">More &rarr;</a></dd>
+        <dt>Zero-Width Character Stripping</dt>
+        <dd>The front-end technique of removing invisible code points like the zero-width space (U+200B) from pasted text. <a href="/zero-width-character/">Try it &rarr;</a></dd>
+      </dl>
+
+      <h2 id="pain">4. User pain points &amp; industry trends</h2>
+      <dl class="gloss">
+        <dt>False Positive AI Authorship</dt>
+        <dd>When a human uses Claude only to translate, proofread, or polish original writing, the output still carries a mark — so human work can be wrongly labeled as AI-generated.</dd>
+        <dt>AI Footprint / Confidentiality Leakage</dt>
+        <dd>The privacy risk that business reports, academic articles, or source code expose the fact that AI was used because of hidden marks or detectable AI text patterns.</dd>
+        <dt>Open-Weight Model Substitution</dt>
+        <dd>The trend of developers and privacy-sensitive industries switching to self-hosted open-weight models (Llama, DeepSeek, etc.) to avoid commercial closed-source watermarking.</dd>
+      </dl>
+
+      <h2 id="search">5. What people search</h2>
+      <p>Common search queries in this space, and where NoAtMark answers them honestly:</p>
+      <ul class="search-terms">
+        <li><em>claude text watermark detector</em> — honest answer: official detection isn't public yet. <a href="/claude-watermark/">Read why &rarr;</a></li>
+        <li><em>how to check claude watermark in text</em> — see the Claude watermark page. <a href="/claude-watermark/">Read &rarr;</a></li>
+        <li><em>remove invisible watermark from claude</em> — we explain what's actually possible. <a href="/claude-watermark/#can-i-remove">Read &rarr;</a></li>
+        <li><em>claude c2pa metadata cleaner</em> — C2PA and metadata stripping explained. <a href="/c2pa/">Read &rarr;</a></li>
+        <li><em>bypass claude ai text tracking</em> — we don't build evasion tools; see our stance. <a href="/claude-watermark/#why-not">Read &rarr;</a></li>
+        <li><em>ai text humanizer for claude</em> — natural rewriting without the "bypass" gimmick. <a href="/humanizer/">Read &rarr;</a></li>
+      </ul>
+
+      <p class="gloss-cta"><a class="btn btn-primary" href="/">&#x1F50D; Scan your text for invisible characters</a></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

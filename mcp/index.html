@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark MCP Server — Text Hygiene for AI Agents | NoAtMark</title>
+<meta name="description" content="The noatmark-mcp server lets Claude Code, Cursor, and other AI tools sanitize text before feeding it to an LLM — strip invisible characters and flag prompt injection.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/mcp/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebPage","name":"NoAtMark MCP Server","url":"https://noatmark.com/mcp/"},
+{"@type":"SoftwareApplication","name":"noatmark-mcp","applicationCategory":"DeveloperApplication","operatingSystem":"Any","url":"https://noatmark.com/mcp/"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://noatmark.com/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://noatmark.com/mcp/"}]}
+]}</script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">For programmers</p>
+      <h1>Text hygiene as an <span class="accent">MCP server</span></h1>
+      <p class="lede">Let Claude Code, Cursor, Cline, and other AI tools clean text before they feed it to an LLM — strip invisible characters and flag prompt injection. The same engines behind noatmark.com, in a single <code>noatmark-mcp</code> package.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F4E6; <b>npm</b> noatmark-mcp</span>
+        <span class="badge">&#x2699;&#xFE0F; <b>3 tools</b> sanitize · scan · clean_format</span>
+        <span class="badge">&#x1F512; <b>local</b> — nothing leaves your machine</span>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>What it does</h2>
+      <table class="ztable">
+        <tr><th>Tool</th><th>What it does</th></tr>
+        <tr><td><code>sanitize_text</code></td><td>Strip invisible/zero-width chars + flag prompt-injection patterns before feeding text to an LLM</td></tr>
+        <tr><td><code>scan_text</code></td><td>Report hidden characters, injection risks, and hidden-text HTML signals</td></tr>
+        <tr><td><code>clean_format</code></td><td>Clean LLM formatting: line endings, blank lines, stray fences, heading depth</td></tr>
+      </table>
+
+      <h2>Install &amp; configure</h2>
+      <pre class="code-block">npm install -g noatmark-mcp</pre>
+      <p>Then add it to your AI tool:</p>
+
+      <h3>Claude Code</h3>
+      <pre class="code-block"># claude mcp add noatmark -- npx -y noatmark-mcp</pre>
+
+      <h3>Cursor / Cline (MCP config)</h3>
+      <pre class="code-block">{
+  "mcpServers": {
+    "noatmark": {
+      "command": "npx",
+      "args": ["-y", "noatmark-mcp"]
+    }
+  }
+}</pre>
+
+      <h2>Why use it</h2>
+      <ul>
+        <li><strong>Prevent prompt injection.</strong> Untrusted text you paste into a prompt (a resume, a web page, a PDF) can carry hidden instructions. <code>sanitize_text</code> flags them before they reach the model.</li>
+        <li><strong>Clean hidden characters.</strong> Invisible zero-width chars break string matching and code. Sanitizing before the model sees them keeps your context clean.</li>
+        <li><strong>Deterministic &amp; local.</strong> It's a fixed algorithm, not another AI call — runs on your machine, never sends your text anywhere.</li>
+      </ul>
+
+      <h2>Honest limits</h2>
+      <ul>
+        <li>Injection patterns are <strong>flagged, not auto-deleted</strong> — removing natural-language injection would corrupt legitimate content. Review flagged text yourself.</li>
+        <li>This is a heuristic — it catches common patterns, not every possible attack. It can't remove statistical AI watermarks. See <a href="/claude-watermark/">why</a>.</li>
+      </ul>
+
+      <div class="card card-accent" style="margin-top:22px">
+        <h3>Prefer a REST API?</h3>
+        <p>There's also <code>POST /api/sanitize</code> and the rest of the <a href="/api/">text hygiene API</a> for pipelines that aren't MCP.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

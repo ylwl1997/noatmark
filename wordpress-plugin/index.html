@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark WordPress Plugin — Auto-Clean Invisible Characters on Save</title>
+<meta name="description" content="Install the free NoAtMark WordPress plugin to strip invisible characters (zero-width spaces, BOM, soft hyphens) from posts automatically on save, with a Gutenberg sidebar and bulk clean. Also: how to do the same in Ghost.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/wordpress-plugin/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">WordPress plugin</p>
+      <h1>Publish clean. <span class="accent">Every post.</span></h1>
+      <p class="lede">The NoAtMark WordPress plugin strips invisible characters — zero-width spaces, joiners, BOMs, soft hyphens — from your content automatically on save. Paste AI drafts straight from ChatGPT or Claude without hidden baggage breaking your layout or SEO.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% local</b> — nothing leaves your server</span>
+        <span class="badge">&#x2B50; <b>auto-clean on save</b> — no extra step</span>
+        <span class="badge">&#x1F504; <b>free</b> — GPL-2.0-or-later</span>
+      </div>
+
+      <div class="browsers">
+        <a class="btn btn-primary btn-lg" href="/noatmark-wordpress-plugin.zip" download>&#x1F4E6; Download WordPress plugin (.zip)</a>
+      </div>
+      <p class="muted small" style="margin-top:8px">Free, no account needed. Install in about a minute — steps below.</p>
+
+      <div class="scanner" style="margin-top:26px">
+        <div class="grid3">
+          <div class="card">
+            <h3>&#x2705; Auto-clean on save</h3>
+            <p>Title, excerpt, and content are stripped of invisible characters the moment you hit save. Zero configuration.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F4CC; Gutenberg sidebar</h3>
+            <p>A "NoAtMark" panel shows a live count of invisible characters in the post, with a one-click <em>Clean now</em> button.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F5C3;&#xFE0F; Bulk clean</h3>
+            <p>Tools &rarr; NoAtMark Text Hygiene scans and cleans every post at once — drafts, pending, and published.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>Install in 3 steps — WordPress</h2>
+      <ol class="steps">
+        <li><strong>Download</strong> the <a href="/noatmark-wordpress-plugin.zip" download>plugin zip</a> (keep it as a zip — don't unzip).</li>
+        <li>In WordPress, go to <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong> and select the zip.</li>
+        <li>Click <strong>Activate</strong> on <em>NoAtMark Text Hygiene</em>. Done — cleaning is on.</li>
+      </ol>
+      <p class="muted">The "NoAtMark" sidebar appears in the block editor automatically. For a full-site sweep, open <strong>Tools &rarr; NoAtMark Text Hygiene</strong> and click <em>Scan &amp; clean all posts</em>.</p>
+
+      <h2>What it strips</h2>
+      <ul>
+        <li>Zero-width spaces (U+200B), joiners (U+200C/U+200D), non-joiner, word joiner (U+2060)</li>
+        <li>BOM (U+FEFF), soft hyphen (U+00AD), direction marks (U+200E/U+200F)</li>
+        <li>Combining grapheme joiner (U+034F), variation selectors, special spaces, non-breaking space</li>
+      </ul>
+      <p class="muted small">Everything runs inside your own WordPress install. No data or text ever leaves your server.</p>
+
+      <h2>Ghost users — a real integration</h2>
+      <p>Ghost doesn't support PHP plugins, but NoAtMark ships a <a href="/ghost/">dedicated Ghost integration</a>: a zero-dependency Node script that bulk-cleans every post through the Ghost Admin API. Two ways to stay clean:</p>
+      <ol class="steps">
+        <li><strong>Bulk clean (Admin API)</strong> — run the <a href="/ghost/clean.js" download>clean.js</a> script to strip invisible characters from all posts' titles, excerpts, and bodies in one pass (markup-safe, <code>--dry-run</code> preview included).</li>
+        <li><strong>Real-time (browser extension)</strong> — install the free <a href="/extension/">NoAtMark browser extension</a> and it strips invisible characters automatically as you copy into the Ghost editor.</li>
+      </ol>
+      <p class="muted small">Both run on your side — no account, no upload.</p>
+
+      <h2>More</h2>
+      <ul>
+        <li>Web tools: <a href="/tools/">noatmark.com/tools/</a></li>
+        <li>Text hygiene API: <a href="/api/">noatmark.com/api/</a></li>
+        <li>MCP server for AI agents: <a href="/mcp/">noatmark.com/mcp/</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark Chrome Extension — Clean Invisible Characters on Copy</title>
+<meta name="description" content="Install the NoAtMark Chrome extension to automatically strip invisible characters (zero-width, BOM) when copying from ChatGPT, Claude, or any web page. Free, private.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/extension/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Chrome extension</p>
+      <h1>Copy clean, <span class="accent">everywhere.</span></h1>
+      <p class="lede">The NoAtMark extension strips invisible characters from anything you copy — zero-width spaces, joiners, BOMs — so ChatGPT, Claude, and web pages never leave hidden baggage on your clipboard.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>100% private</b> — nothing leaves your device</span>
+        <span class="badge">&#x1F4C1; <b>auto-clean on copy</b> — toggle on/off</span>
+        <span class="badge">&#x1F504; <b>free</b></span>
+      </div>
+
+      <div class="browsers">
+        <a class="btn btn-primary btn-lg" href="/noatmark-chrome-extension.zip" download>&#x1F310; Chrome / Edge / Opera / Brave</a>
+        <a class="btn btn-ghost btn-lg" href="/noatmark-firefox-extension.zip" download>&#x1F525; Firefox</a>
+        <a class="btn btn-ghost btn-lg" href="/noatmark-text-hygiene.vsix" download>&#x1F4BB; VS Code</a>
+      </div>
+      <p class="muted small" style="margin-top:8px">Free, no account needed. Unzip and load it in about a minute — steps below.</p>
+
+      <div class="scanner" style="margin-top:26px">
+        <div class="grid3">
+          <div class="card">
+            <h3>&#x2705; Auto-clean on copy</h3>
+            <p>Copy from ChatGPT, Claude, or any page — invisible characters are stripped automatically. Toggle it off anytime.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F4CC; Right-click to clean</h3>
+            <p>Select any text, right-click, choose <em>Copy clean text (NoAtMark)</em>.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F5C3;&#xFE0F; Popup scanner</h3>
+            <p>Click the toolbar icon for a quick paste-to-scan-and-clean panel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>Install in 4 steps — Chrome / Edge / Opera / Brave</h2>
+      <p>All Chromium browsers use the same zip:</p>
+      <ol class="steps">
+        <li><strong>Download</strong> the <a href="/noatmark-chrome-extension.zip" download>Chromium zip</a> and unzip it to a folder.</li>
+        <li>Open your browser: <code>chrome://extensions</code>, <code>edge://extensions</code>, <code>opera://extensions</code>, or <code>brave://extensions</code>.</li>
+        <li>Turn on <strong>Developer mode</strong> (top-right).</li>
+        <li>Click <strong>Load unpacked</strong> and select the unzipped folder.</li>
+      </ol>
+
+      <h2>Install in 4 steps — Firefox</h2>
+      <p>Firefox uses its own package and a free developer add-on account (no fee):</p>
+      <ol class="steps">
+        <li><strong>Download</strong> the <a href="/noatmark-firefox-extension.zip" download>Firefox zip</a> and unzip it to a folder.</li>
+        <li>Open Firefox and go to <code>about:debugging#/runtime/this-firefox</code>.</li>
+        <li>Click <strong>Load Temporary Add-on…</strong> and select <code>manifest.json</code> inside the folder.</li>
+        <li>Done — the NoAtMark icon appears. For a permanent install, publish free on <a href="https://addons.mozilla.org/" target="_blank" rel="noopener">addons.mozilla.org</a>.</li>
+      </ol>
+      <p class="muted">Safari needs a Mac + Xcode, so it's not included here.</p>
+
+      <h2>Install in 2 steps — VS Code</h2>
+      <ol class="steps">
+        <li><strong>Marketplace:</strong> once verified, install straight from <a href="https://marketplace.visualstudio.com/items?itemName=noatmark.noatmark-text-hygiene" target="_blank" rel="noopener">the VS Code Marketplace listing</a> (search "NoAtMark Text Hygiene").</li>
+        <li><strong>Or manual:</strong> download the <a href="/noatmark-text-hygiene.vsix" download>.vsix</a> and run <code>code --install-extension noatmark-text-hygiene.vsix</code> (or Extensions &rarr; "..." &rarr; Install from VSIX).</li>
+      </ol>
+      <p class="muted">Commands (Command Palette, <code>Ctrl+Shift+P</code>): <em>NoAtMark: Clean invisible characters in selection</em> (<code>Ctrl+Alt+Shift+C</code>) and <em>Scan selection</em> (<code>Ctrl+Alt+Shift+S</code>).</p>
+
+      <h2>What it strips</h2>
+      <ul>
+        <li>Zero-width spaces (U+200B), joiners (U+200C/U+200D), word joiner</li>
+        <li>BOM (U+FEFF), soft hyphen, direction marks, combining grapheme joiner</li>
+        <li>Variation selectors and special spaces</li>
+      </ul>
+      <p class="muted small">Everything runs locally. No data, text, or browsing history ever leaves your device.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>

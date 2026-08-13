@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoAtMark for Ghost — Bulk-Clean Invisible Characters</title>
+<meta name="description" content="Clean invisible characters from Ghost posts via the Admin API. A free, zero-dependency Node script that strips zero-width spaces, BOMs, and soft hyphens from titles and content without touching your markup.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noatmark.com/ghost/">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/tools/">Tools</a>
+      <a href="/api/">Developers</a>
+      <a href="/tools/pre-publish-inspector/">Creators</a>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Learn</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">Ghost integration</p>
+      <h1>Clean your Ghost posts, <span class="accent">in bulk.</span></h1>
+      <p class="lede">Ghost doesn't support plugins, so NoAtMark ships a zero-dependency Node script that connects to the Ghost Admin API and strips invisible characters — zero-width spaces, BOMs, soft hyphens — from every post's title, excerpt, and body, without touching your markup.</p>
+      <div class="badge-row">
+        <span class="badge">&#x1F512; <b>runs on your machine</b> — key never leaves it</span>
+        <span class="badge">&#x1F9F1; <b>markup-safe</b> — edits mobiledoc text only</span>
+        <span class="badge">&#x1F504; <b>zero dependencies</b> — Node 18+</span>
+      </div>
+
+      <div class="browsers">
+        <a class="btn btn-primary btn-lg" href="/ghost/clean.js" download>&#x2B07; Download clean.js</a>
+      </div>
+      <p class="muted small" style="margin-top:8px">Free, open source. No account, no upload.</p>
+
+      <div class="scanner" style="margin-top:26px">
+        <div class="grid3">
+          <div class="card">
+            <h3>&#x1F4DA; Admin API bulk clean</h3>
+            <p>Pulls every post (paginated) and cleans the ones that contain invisible characters — with a <code>--dry-run</code> preview first.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F9F1; Markup-safe</h3>
+            <p>Edits mobiledoc <em>text markers only</em>, so cards, atoms, and formatting survive — unlike an HTML round-trip, which can drop Ghost content.</p>
+          </div>
+          <div class="card">
+            <h3>&#x1F512; Private</h3>
+            <p>Everything runs locally. Your Admin API key is sent only to your own Ghost server.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info wrap">
+      <h2>Run it in 3 steps</h2>
+      <ol class="steps">
+        <li><strong>Get an Admin API key</strong>: Ghost Admin &rarr; Settings &rarr; Integrations &rarr; Add custom integration &rarr; copy the <em>Admin API key</em> (format <code>id:secret</code>).</li>
+        <li><strong>Dry run</strong> (no writes):
+          <pre class="code"><code>GHOST_URL=https://yourblog.com GHOST_ADMIN_KEY=id:secret node clean.js --dry-run</code></pre>
+        </li>
+        <li><strong>Run for real</strong>:
+          <pre class="code"><code>GHOST_URL=https://yourblog.com GHOST_ADMIN_KEY=id:secret node clean.js</code></pre>
+        </li>
+      </ol>
+      <p class="muted">Requires Node 18+. No <code>npm install</code> needed — the script has zero dependencies.</p>
+
+      <h2>What it strips</h2>
+      <ul>
+        <li>Zero-width spaces (U+200B), joiners (U+200C/U+200D), non-joiner, word joiner (U+2060)</li>
+        <li>BOM (U+FEFF), soft hyphen (U+00AD), direction marks (U+200E/U+200F)</li>
+        <li>Combining grapheme joiner (U+034F), variation selectors, special spaces, non-breaking space</li>
+      </ul>
+
+      <h2>No auto-clean on save? Use the extension</h2>
+      <p>Ghost has no save hook, so this script is for bulk cleanup. For real-time stripping as you paste into the Ghost editor, install the free <a href="/extension/">NoAtMark browser extension</a> — it cleans invisible characters automatically on copy.</p>
+
+      <h2>More</h2>
+      <ul>
+        <li>Web tools: <a href="/tools/">noatmark.com/tools/</a></li>
+        <li>Text hygiene API: <a href="/api/">noatmark.com/api/</a></li>
+        <li>WordPress plugin: <a href="/wordpress-plugin/">noatmark.com/wordpress-plugin/</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+  <div class="wrap foot-grid">
+    <div class="foot-col">
+      <p class="foot-brand">noat<strong>mark</strong></p>
+      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+    </div>
+    <div class="foot-col">
+      <b>Product</b>
+      <a href="/tools/">All tools</a>
+      <a href="/api/">API</a>
+      <a href="/mcp/">MCP server</a>
+      <a href="/extension/">Chrome extension</a>
+      <a href="/wordpress-plugin/">WordPress plugin</a>
+      <a href="/ghost/">Ghost</a>
+    </div>
+    <div class="foot-col">
+      <b>Use cases</b>
+      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/characters/">Characters</a>
+      <a href="/glossary/">Glossary</a>
+    </div>
+    <div class="foot-col">
+      <b>Company</b>
+      <a href="/pricing/">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="/news/">News</a>
+      <a href="/about/">About</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="mailto:hello@noatmark.com">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-in">
+    <p class="muted small">Not affiliated with Anthropic, OpenAI, the C2PA, or the EU.</p>
+  </div>
+</footer>
+</div>
+</body>
+</html>
