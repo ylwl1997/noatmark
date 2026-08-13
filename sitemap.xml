@@ -21,6 +21,7 @@
   <url><loc>https://noatmark.com/for-students-teachers/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://noatmark.com/google-docs/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://noatmark.com/how-it-works/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://noatmark.com/integrations/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://noatmark.com/tools/llm-formatter/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://noatmark.com/tools/file-cleaner/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://noatmark.com/tools/plain-text-extractor/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
