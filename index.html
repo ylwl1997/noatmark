@@ -33,27 +33,25 @@
     <a class="brand" href="/"><img class="brand-logo" src="/logo.svg" alt="NoAtMark logo" width="30" height="30"><span>noat</span><strong>mark</strong></a>
     <nav class="nav" aria-label="Main">
       <a href="/tools/">Tools</a>
-      <a href="/api/">Developers</a>
-      <a href="/tools/pre-publish-inspector/">Creators</a>
-      <a href="/for-students-teachers/">Students &amp; Teachers</a>
-      <a href="/pricing/">Pricing</a>
-      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Scan free</a>
+      <a href="/mcp/">MCP &amp; API</a>
+      <a href="/blog/">Blog</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="/">&#x1F50D; Free scan</a>
     </nav>
   </div>
 </header>
 
-  <div class="banner"><div class="wrap">&#x2728; Sanitize untrusted text before it hits your LLM — <a href="/api/">try the API &rarr;</a></div></div>
+  <div class="banner"><div class="wrap">&#x2728; Every tool is free — <a href="/tools/">browse all tools &rarr;</a> &middot; automate with <a href="/mcp/">MCP &amp; API &rarr;</a></div></div>
 
   <main>
     <!-- HERO: tool embedded -->
     <section class="hero wrap" id="scanner">
-      <p class="eyebrow">Text hygiene for the AI age</p>
-      <h1>Clean text, <span class="accent">everywhere AI touches it.</span></h1>
-      <p class="lede">Paste any text — AI output, untrusted input, or a web copy — and instantly find every hidden Unicode and zero-width character. Then clean it, or run the same engine in your own pipeline.</p>
+      <p class="eyebrow">Free text hygiene for the AI age</p>
+      <h1>Clean text, <span class="accent">free and in-browser.</span></h1>
+      <p class="lede">Paste any text — AI output, untrusted input, or a web copy — and instantly find every hidden Unicode and zero-width character. Every tool is free, private, and runs entirely in your browser.</p>
       <div class="badge-row">
         <span class="badge">&#x1F512; <b>100% private</b> — in-browser</span>
-        <span class="badge">&#x2705; <b>Free forever</b> — no sign-up</span>
-        <span class="badge">&#x1F6E1;&#xFE0F; <b>Sanitize</b> before it hits an LLM</span>
+        <span class="badge">&#x2705; <b>Free</b> — no sign-up</span>
+        <span class="badge">&#x1F50D; <b>Deterministic</b> — no false positives</span>
       </div>
 
       <div class="scanner">
@@ -100,28 +98,6 @@
         <div class="trust-item"><span class="ic">&#x26A1;</span><div><b>Instant</b><span>Scan on every keystroke.</span></div></div>
         <div class="trust-item"><span class="ic">&#x1F9F9;</span><div><b>One-click clean</b><span>Strip all hidden chars &amp; copy.</span></div></div>
         <div class="trust-item"><span class="ic">&#x1F6E1;&#xFE0F;</span><div><b>Zero upload</b><span>No account, no tracking.</span></div></div>
-      </div>
-    </section>
-
-    <!-- THREE PERSONAS -->
-    <section class="info wrap">
-      <h2>Built for <span class="accent">three workflows</span></h2>
-      <div class="grid3">
-        <a class="card card-link" href="/api/">
-          <span class="cat">Developers</span>
-          <h3>Sanitize input before it hits your LLM</h3>
-          <p>Strip injection attempts and invisible characters from untrusted text — via API, MCP, or SDK. <span class="arr">&rarr;</span></p>
-        </a>
-        <a class="card card-link card-accent" href="/tools/pre-publish-inspector/">
-          <span class="cat">Creators</span>
-          <h3>Publish clean, AI-visible content</h3>
-          <p>Check the GEO score and clean hidden text before you publish — WordPress, Ghost, or anywhere. <span class="arr">&rarr;</span></p>
-        </a>
-        <a class="card card-link" href="/for-students-teachers/">
-          <span class="cat">Students &amp; teachers</span>
-          <h3>Clean your work — or audit it</h3>
-          <p>Students clean before submitting; teachers reveal hidden text in submissions. <span class="arr">&rarr;</span></p>
-        </a>
       </div>
     </section>
 
@@ -185,9 +161,32 @@
           <p>Clean untrusted text before it hits your LLM. <span class="arr">&rarr;</span></p>
         </a>
         <a class="card card-link" href="/tools/submission-auditor/">
-          <span class="cat">Audit · teachers</span>
+          <span class="cat">Audit</span>
           <h3>Submission auditor</h3>
           <p>Reveal hidden text in submitted work. <span class="arr">&rarr;</span></p>
+        </a>
+      </div>
+    </section>
+
+    <!-- MCP & API -->
+    <section class="info wrap">
+      <h2>Automate it — <span class="accent">MCP, API &amp; extensions</span></h2>
+      <p class="lede-sub">The same engines as an MCP server, JSON API, and extensions — wire text hygiene into your own AI workflow.</p>
+      <div class="grid3">
+        <a class="card card-link" href="/mcp/">
+          <span class="cat">MCP</span>
+          <h3>MCP server</h3>
+          <p>Let AI agents clean text as they read files or search. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/api/">
+          <span class="cat">API</span>
+          <h3>JSON API</h3>
+          <p>Sanitize, scan, and clean from your own pipeline. <span class="arr">&rarr;</span></p>
+        </a>
+        <a class="card card-link" href="/extension/">
+          <span class="cat">Extensions</span>
+          <h3>Browser &amp; plugins</h3>
+          <p>Chrome, WordPress, Ghost, Notion, Google Docs. <span class="arr">&rarr;</span></p>
         </a>
       </div>
     </section>
@@ -217,63 +216,17 @@
       </div>
     </section>
 
-    <!-- PRICING -->
-    <section class="info wrap">
-      <h2>Simple, <span class="accent">transparent pricing</span></h2>
-      <p class="lede-sub">Every tool is free. Upgrade to go ad-free forever and unlock the pipeline.</p>
-      <div class="grid2">
-        <div class="card">
-          <h3>Free</h3>
-          <p class="price">$0 <span>forever</span></p>
-          <ul class="feat">
-            <li>&#x2713; All web tools</li>
-            <li>&#x2713; In-browser, no account</li>
-            <li>&#x2713; Limited API</li>
-            <li>&#x2717; Ads shown</li>
-          </ul>
-        </div>
-        <div class="card card-ok">
-          <h3>Creator</h3>
-          <p class="price">$9 <span>/mo</span></p>
-          <ul class="feat">
-            <li>&#x2713; Ad-free forever</li>
-            <li>&#x2713; WP plugin + Ghost + extension</li>
-            <li>&#x2713; Batch cleaning + GEO score</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>API Pro</h3>
-          <p class="price">$29 <span>/mo</span></p>
-          <ul class="feat">
-            <li>&#x2713; Ad-free forever</li>
-            <li>&#x2713; Sanitize / scan / clean API</li>
-            <li>&#x2713; MCP + SDKs</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Team</h3>
-          <p class="price">$149 <span>/mo</span></p>
-          <ul class="feat">
-            <li>&#x2713; Ad-free forever</li>
-            <li>&#x2713; Multi-seat + batch audit</li>
-            <li>&#x2713; Compliance report</li>
-          </ul>
-        </div>
-      </div>
-      <p style="margin-top:18px"><a class="btn btn-ghost" href="/pricing/">See full pricing &rarr;</a></p>
-    </section>
-
     <!-- LEARN -->
     <section class="learn wrap">
-      <h2>Understand the <span class="accent">AI watermark era</span></h2>
+      <h2>Learn — <span class="accent">the AI watermark era</span></h2>
       <div class="grid3">
+        <a class="card card-link card-accent" href="/blog/"><span class="cat">Blog</span><h3>All articles &amp; guides</h3><p>Invisible characters, AI watermarks, and text hygiene — explained. <span class="arr">&rarr;</span></p></a>
         <a class="card card-link" href="/claude-watermark/"><h3>Claude's text watermark</h3><p>What it is — and what can &amp; can't be removed. <span class="arr">&rarr;</span></p></a>
         <a class="card card-link" href="/zero-width-character/"><h3>Zero-width characters</h3><p>U+200B, ZWJ, BOM — the invisible bytes. <span class="arr">&rarr;</span></p></a>
         <a class="card card-link" href="/c2pa/"><h3>C2PA &amp; Content Credentials</h3><p>The signed-provenance standard, explained. <span class="arr">&rarr;</span></p></a>
-        <a class="card card-link" href="/c2pa-verifier/"><h3>C2PA Checker</h3><p>Verify provenance in your images. <span class="arr">&rarr;</span></p></a>
         <a class="card card-link" href="/glossary/"><h3>AI watermark glossary</h3><p>Every term in one place. <span class="arr">&rarr;</span></p></a>
+        <a class="card card-link" href="/characters/"><h3>Character reference</h3><p>Zero-width space, BOM, and friends. <span class="arr">&rarr;</span></p></a>
       </div>
-      <p style="margin-top:16px"><a class="btn btn-ghost" href="/news/">All news &amp; guides &rarr;</a></p>
     </section>
 
     <!-- FAQ -->
@@ -282,7 +235,7 @@
       <details><summary>What are zero-width characters?</summary><p>Zero-width characters are Unicode code points that occupy no visible space, like the zero-width space (<code>U+200B</code>), zero-width joiner (<code>U+200D</code>), and zero-width non-joiner (<code>U+200C</code>). They're invisible on screen but still count as characters, breaking validation, searching, and layout.</p></details>
       <details><summary>Why does AI-generated text have hidden characters?</summary><p>AI models, text editors, and copy-paste from web pages can silently insert zero-width characters, BOMs, soft hyphens, and variation selectors. The output looks fine but carries invisible artifacts.</p></details>
       <details><summary>Does NoAtMark remove Claude's watermark?</summary><p>No, and no tool honestly can today. Anthropic's text watermark is a statistical signal in word choice, not a visible character; C2PA lives in file metadata. NoAtMark removes invisible <em>Unicode characters</em> — it doesn't claim to strip statistical watermarks.</p></details>
-      <details><summary>Is NoAtMark free?</summary><p>The scanner and every web tool are free forever — no sign-up, no uploads, no limits. Paid plans go ad-free and unlock the API, plugins, and team features.</p></details>
+      <details><summary>Is NoAtMark free?</summary><p>Yes — every web tool is free forever, with no sign-up, no uploads, and no limits. The MCP server, API, and extensions are also free to use.</p></details>
       <details><summary>Can I clean invisible characters in bulk?</summary><p>Yes — the <a href="/wordpress-plugin/">WordPress plugin</a>, <a href="/ghost/">Ghost script</a>, and <a href="/api/">REST API</a> all clean an entire site's content before publishing.</p></details>
     </section>
   </main>
@@ -291,14 +244,22 @@
   <div class="wrap foot-grid">
     <div class="foot-col">
       <p class="foot-brand">noat<strong>mark</strong></p>
-      <p class="muted small">Text hygiene for the AI age. Private, free, in-browser.</p>
+      <p class="muted small">Free text hygiene for the AI age. Private, in-browser.</p>
     </div>
     <div class="foot-col">
-      <b>Product</b>
-      <a href="/how-it-works/">How it works</a>
+      <b>Web tools</b>
       <a href="/tools/">All tools</a>
-      <a href="/api/">API</a>
+      <a href="/">Scanner</a>
+      <a href="/tools/file-cleaner/">File cleaner</a>
+      <a href="/tools/csv-injection-sanitizer/">CSV sanitizer</a>
+      <a href="/tools/rag-sanitizer/">RAG sanitizer</a>
+      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
+      <a href="/tools/submission-auditor/">Submission auditor</a>
+    </div>
+    <div class="foot-col">
+      <b>MCP &amp; API</b>
       <a href="/mcp/">MCP server</a>
+      <a href="/api/">API</a>
       <a href="/extension/">Chrome extension</a>
       <a href="/wordpress-plugin/">WordPress plugin</a>
       <a href="/ghost/">Ghost</a>
@@ -306,20 +267,10 @@
       <a href="/google-docs/">Google Docs</a>
     </div>
     <div class="foot-col">
-      <b>Use cases</b>
-      <a href="/tools/prompt-injection-scanner/">Prompt injection</a>
-      <a href="/tools/csv-injection-sanitizer/">CSV sanitizer</a>
-      <a href="/tools/rag-sanitizer/">RAG sanitizer</a>
-      <a href="/tools/pre-publish-inspector/">Pre-publish inspector</a>
-      <a href="/tools/submission-auditor/">Submission auditor</a>
-      <a href="/for-students-teachers/">Students &amp; teachers</a>
+      <b>Learn</b>
+      <a href="/blog/">Blog</a>
       <a href="/characters/">Characters</a>
       <a href="/glossary/">Glossary</a>
-    </div>
-    <div class="foot-col">
-      <b>Company</b>
-      <a href="/pricing/">Pricing</a>
-      <a href="/blog/">Blog</a>
       <a href="/news/">News</a>
       <a href="/about/">About</a>
       <a href="/privacy/">Privacy</a>
